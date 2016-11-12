@@ -1,0 +1,63 @@
+/**
+ * The project build will be created by Gradle using the below configuration
+ * The spring boot gradle plugin automatically handles all the necessary actions to create a runnable Spring Boot app
+ * For custom config, other actions will be added here
+ */
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:' + springBootVersion
+    }
+}
+
+/**
+ * Declaration of some used plugins for the project build
+ */
+// MANDATORY
+apply plugin: 'java'
+// OPTIONAL
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+/**
+ * All the compile dependencies will be declared here
+ */
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa:' + springBootVersion
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version:
+
+    compile 'org.projectlombok:lombok:1.16.10'
+
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf:' + springBootVersion
+
+    compile 'org.yaml:snakeyaml'
+
+    compile 'org.hsqldb:hsqldb:2.0.0'
+
+    compile 'com.stormpath.sdk:stormpath-sdk-api:1.1.1'
+
+    compile group: 'com.stormpath.sdk', name: 'stormpath-sdk-httpclient', version: '1.1.1'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+    testCompile 'junit:junit'
+}
+
+/**
+ * All the repositories where gradle will try to find the declared dependencies from 'dependencies' block
+  */
+
+repositories {
+    maven { url "http://repo.spring.io/libs-release" }
+    mavenLocal()
+    mavenCentral()
+}
