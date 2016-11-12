@@ -1,0 +1,7 @@
+/**
+ * Here will be declared the constants for the project build
+ * DO NOT mistake those with the project business's constants, preferably declared in .yaml (or .properties) files
+ */
+
+rootProject.name = 'courseraReplica'
+
