@@ -29,27 +29,32 @@ apply plugin: 'spring-boot'
  * All the compile dependencies will be declared here
  */
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-web'
+    // Stormpath API
+    compile group: 'com.stormpath.spring', name: 'stormpath-default-spring-boot-starter', version: '1.1.4'
 
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa:' + springBootVersion
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.4.2.RELEASE'
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version:
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.4.2.RELEASE'
 
-    compile 'org.projectlombok:lombok:1.16.10'
+//    compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '1.4.1.RELEASE'
 
-    compile 'org.springframework.boot:spring-boot-starter-thymeleaf:' + springBootVersion
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.4.1.RELEASE'
+
+//    compile group : 'org.projectlombok', name: 'lombok', version: '1.16.10'
+
+//    compile 'org.springframework.boot:spring-boot-starter-thymeleaf:' + springBootVersion
+//    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+
+//    this import in just  for the auth templates from stormpath
+//    compile group: 'com.stormpath.spring', name: 'spring-boot-starter-stormpath-thymeleaf', version: '1.0.RC4.5'
 
     compile 'org.yaml:snakeyaml'
 
-    compile 'org.hsqldb:hsqldb:2.0.0'
+ //   compile 'org.hsqldb:hsqldb:2.0.0'
 
-    compile 'com.stormpath.sdk:stormpath-sdk-api:1.1.1'
-
-    compile group: 'com.stormpath.sdk', name: 'stormpath-sdk-httpclient', version: '1.1.1'
-
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
-
-    testCompile 'junit:junit'
+//    testCompile 'org.springframework.boot:spring-boot-starter-test'
+//
+//    testCompile 'junit:junit'
 }
 
 /**
