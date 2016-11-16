@@ -7,7 +7,7 @@ import java.util.List;
  *
  */
 public interface Tree extends TreeRoot {
-    <E extends Tree> List<E> children();
+	<E extends Tree> List<E> children();
 
-    <E extends Tree> E add(E child);
+	<E extends Tree> E add(E child);
 }

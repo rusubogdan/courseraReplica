@@ -6,9 +6,9 @@ import java.util.List;
  */
 public class Question {
 
-    String question;
+	String question;
 
-    List<String> answers;
+	List<String> answers;
 
-    List<String> correctAnswers;
+	List<String> correctAnswers;
 }

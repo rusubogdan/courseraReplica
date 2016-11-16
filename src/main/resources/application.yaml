@@ -1,29 +1,11 @@
-# the port for the embeded Tomcat server
 server:
-    port: 8090
-
-## enables HOT SWAP
+  port: 8090
 spring:
   thymeleaf:
     cache: false
-
-## spring security configuration
-# disable Spring Security entirely
 security:
   basic:
     enabled: false
-
-### stormpath configuration
-# disable Stormpath's Spring Security support:
 stormpath:
   application:
     href: https://api.stormpath.com/v1/applications/2QaziTvNf6JPRKpnE3FQ8a
-
-
-##  spring:
-##    security:
-##      enabled: false
-##  client:
-##      cacheManager:
-##        enabled: true
-##
