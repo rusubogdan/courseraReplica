@@ -40,10 +40,7 @@ dependencies {
 
 //    compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.4.1.RELEASE'
 
-//    compile group : 'org.projectlombok', name: 'lombok', version: '1.16.10'
-
-//    compile 'org.springframework.boot:spring-boot-starter-thymeleaf:' + springBootVersion
-//    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile group : 'org.projectlombok', name: 'lombok', version: '1.16.10'
 
 //    this import in just  for the auth templates from stormpath
 //    compile group: 'com.stormpath.spring', name: 'spring-boot-starter-stormpath-thymeleaf', version: '1.0.RC4.5'

@@ -9,6 +9,4 @@ package com.courserareplica.origin;
  *
  */
 public interface TreeRoot {
-
-
 }
