@@ -1,4 +1,4 @@
-#DO NOT COMMIT THE PASSWORDS
+# DO NOT COMMIT THE PASSWORDS
 server:
   port: 8090
 spring:
@@ -15,11 +15,16 @@ spring:
             ddl-auto: update
         database-platform: org.hibernate.dialect.PostgreSQLDialect
 security:
-  basic:
-    enabled: false
+    basic:
+        enabled: false
 stormpath:
-  application:
-    href: https://api.stormpath.com/v1/applications/2QaziTvNf6JPRKpnE3FQ8a
+    application:
+        href: https://api.stormpath.com/v1/applications/2QaziTvNf6JPRKpnE3FQ8a
+    web:
+        login:
+            nextUri: /home
+        logout:
+            nextUri: /public?action=logout
 
 
 ##  spring:
