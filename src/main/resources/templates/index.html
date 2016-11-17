@@ -1,7 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<head th:replace="fragments/header :: dependencies">
+</head>
 <body>
+	<nav th:replace="fragments/header :: navbar"></nav>
 	<div>
 		<div>index 1</div>
 	</div>
