@@ -12,6 +12,7 @@ public class HomeController {
      * This will be accessed after a successful login by default
      * Only authorized users should end up here
      */
+	@RequestMapping
 	public String home(Model m) {
 		m.addAttribute("activeNavButton", "home");
 		return "index";
