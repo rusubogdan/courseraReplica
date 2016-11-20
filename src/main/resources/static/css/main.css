@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+* {
+	font-family: Lato;
+}
+
+body {
+	background: #F1F2F1;
+}
+
+.navbar {
+	background: #fff;
+	margin-bottom:10px;
+}
+
+.navbar .navbar-brand {
+	min-width: 200px;
+	color:#428bca;
+	font-size:2.2rem;
+	font-weight:bold;
+	line-height:3rem;
+	height:auto;
+	letter-spacing:-0.1rem;
+}
+
+.navbar .navbar-nav>li>a {
+	font-size:1.5rem;
+	line-height:3rem;
+}
+
+.navbar .navbar-form {
+	margin-top:1.2rem;
+}
+
+.content {
+	padding-top:70px;
+	background: white;
+	min-height: 100%;
+}
