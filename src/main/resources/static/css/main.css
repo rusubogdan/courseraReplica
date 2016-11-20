@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
 
 * {
-	font-family: Lato;
+	font-family: Roboto;
 }
 
 body {
@@ -9,18 +10,20 @@ body {
 }
 
 .navbar {
-	background: #fff;
 	margin-bottom:10px;
+	border-bottom:none;
+	background:#fff;
 }
 
 .navbar .navbar-brand {
 	min-width: 200px;
-	color:#428bca;
-	font-size:2.2rem;
+	color: #1679ff;
+	font-size:2.3rem;
 	font-weight:bold;
 	line-height:3rem;
 	height:auto;
 	letter-spacing:-0.1rem;
+	text-transform:lowercase;
 }
 
 .navbar .navbar-nav>li>a {
@@ -32,8 +35,22 @@ body {
 	margin-top:1.2rem;
 }
 
+.navbar .user-brand {
+	px; */
+	margin-right:3px;
+	background:#437dcc;
+	color:white;
+	width: 1.5em;
+	display: inline-block;
+	height: 1.5em;
+	text-align: center;
+	line-height: 1.5em;
+	text-transform:uppercase;
+	font-weight:bold;
+}
+
 .content {
 	padding-top:70px;
-	background: white;
+	
 	min-height: 100%;
 }
