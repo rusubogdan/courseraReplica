@@ -11,11 +11,11 @@ public class PublicController {
 
     @RequestMapping("/public")
     public String publicPage() {
-        return "index";
+        return "public";
     }
 
     @RequestMapping("/")
     public String firstPage() {
-        return "index";
+        return "public";
     }
 }

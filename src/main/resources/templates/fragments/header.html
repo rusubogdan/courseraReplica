@@ -9,6 +9,10 @@
 </head>
 <body>
   <nav class="navbar navbar-default" th:fragment="navbar">
+  <form action="/logout" hidden="hidden" id="logoutForm" method="post">
+      <input type="submit" id="logoutInput" hidden="hidden"/>
+  </form>
+
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -59,12 +63,24 @@
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="#" id="logoutHref">LOGOUT</a></li>
           </ul>
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+          $("#logoutHref").click(function() {
+              this.preventDefault();
+              $('#logoutForm').submit();
+          });
+      });
+  </script>
+
 </body>
 </html>
+
+

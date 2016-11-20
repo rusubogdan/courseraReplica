@@ -15,6 +15,6 @@ public class HomeController {
 	@RequestMapping
 	public String home(Model m) {
 		m.addAttribute("activeNavButton", "home");
-		return "index";
+		return "home";
 	}
 }

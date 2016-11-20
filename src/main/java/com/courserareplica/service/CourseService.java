@@ -1,7 +1,14 @@
 package com.courserareplica.service;
 
-/**
- * Created by bogdan on 18.11.2016.
- */
-public class CourseService {
+import com.courserareplica.model.Course;
+
+import java.util.List;
+
+public interface CourseService {
+
+    List<Course> getAllCourses();
+
+    Course getCourse(String name);
+
+    Course save(Course course);
 }
