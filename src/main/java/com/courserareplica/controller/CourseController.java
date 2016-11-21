@@ -31,4 +31,12 @@ public class CourseController {
 
         return "courses";
     }
+    
+    @RequestMapping(value = "/course", method = RequestMethod.GET)
+    public String viewCourse(Model model) {
+    	model.addAttribute("activeNavButton", "course");
+    	model.addAttribute("course.title", "Cursul exemplu");
+    	model.addAttribute("course.author", "Autor");
+        return "course";
+    }
 }
