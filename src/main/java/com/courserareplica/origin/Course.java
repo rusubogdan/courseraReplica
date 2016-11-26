@@ -16,6 +16,7 @@ import java.util.List;
 public class Course implements Tree {
 
 	// owner - it will retrieve basic data from stormpath for the UI logic
+    // todo make it an user dto
 	@Getter
 	@Setter
 	private Account ownerAccount;

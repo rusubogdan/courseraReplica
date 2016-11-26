@@ -11,6 +11,8 @@ import java.util.Set;
 public class Course {
 
     @Id
+    @SequenceGenerator(name = "course_seq", sequenceName = "course_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_seq")
     @Setter
     @Getter
     private Long id;

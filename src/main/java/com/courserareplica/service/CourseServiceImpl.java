@@ -22,7 +22,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getCourse(String name) {
         List<Course> courses = repository.findByName(name);
-        return courses.get(0);
+        return courses.isEmpty() ? null : courses.get(0);
     }
 
     @Override

@@ -34,7 +34,8 @@ targetCompatibility = 1.8
  */
 dependencies {
     // Stormpath API
-    compile group: 'com.stormpath.spring', name: 'stormpath-default-spring-boot-starter', version: '1.1.4'
+    compile(group: 'com.stormpath.spring', name: 'stormpath-default-spring-boot-starter', version: '1.1.4') {
+    }
 
 //    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.4.2.RELEASE'
 
@@ -60,12 +61,40 @@ dependencies {
     compile group: 'org.webjars.bower', name: 'tether', version: '1.3.7'
     compile group: 'org.webjars.bower', name: 'fontawesome', version: '4.7.0'
 
-//    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
-war {
+springBoot {
+    mainClass = "com.courserareplica.Application"
+}
+
+springBoot {
+    executable = true
+}
+
+bootRepackage {
+//    withJarTask jar
+}
+
+//war {
+//    baseName = 'cours'
+//    version = '1.0'
+//}
+
+jar {
     baseName = 'cours'
-    version = '1.0'
+    version =  '0.1.0'
+    manifest{
+        attributes(
+                'Main-Class': 'com.courserareplica.Application'
+        )
+    }
+
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
 }
 
 /**

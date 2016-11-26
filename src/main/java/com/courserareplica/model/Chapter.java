@@ -11,7 +11,8 @@ import java.io.Serializable;
 public class Chapter implements Serializable {
 
     @Id
-    @Column
+    @SequenceGenerator(name = "chapter_seq", sequenceName = "chapter_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chapter_seq")
     @Setter
     @Getter
     private Long id;

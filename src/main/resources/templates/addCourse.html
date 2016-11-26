@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add course</title>
+
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/webjars/fontawesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css" />
+    <link th:href="@{/css/summernote.css}" type="text/css" rel="stylesheet" />
+
+    <script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}" type="application/javascript"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}" type="application/javascript"></script>
+    <script th:src="@{/js/common.js}" type="application/javascript"></script>
+    <script th:src="@{/js/summernote.min.js}" type="application/javascript"></script>
+    <script th:src="@{/js/course.js}" type="application/javascript"></script>
+</head>
+<body>
+<nav th:replace="fragments/header :: navbar"></nav>
+<div class="container content">
+    <div class="row">
+        <div class="col-md-12 home-presentation">
+            Test
+        </div>
+
+        <div>
+            <div id="courseTitle">Title</div>
+            <div id="courseDescription">Description</div>
+        </div>
+
+        <div id="saveCourse">
+            <input id="doSaveCourse" type="submit" value="Save" name="submit" />
+        </div>
+
+        <div>
+            <div id="courseTitle"></div>
+            <div id="courseText"></div>
+            <div id="courseInfo"></div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

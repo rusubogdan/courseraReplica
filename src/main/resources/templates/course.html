@@ -8,8 +8,9 @@
 	<div class="row">
 		<div class="col-md-10">
 			<div class="row">
-    			<h1>Exemplu curs, Autor</h1>
-    			<div class="description">O mica descriere</div>
+    			<h1 th:text="${course.name}"></h1>
+    			<h3 th:text="${course.ownerId}"></h3>
+    			<div class="description" th:text="${course.description}"></div>
     		</div>
     		<div class="row">
     			<article class="col-md-12 course-content">
@@ -40,6 +41,11 @@
 				<div class="col-xs-10">Sectiune 2</div>
 			</div>
 		</div>
+
+        <div>
+            <input id="addChapter" type="submit" value="Save" name="submit" />
+        </div>
+
 	</div>
 </div>
 </body>
