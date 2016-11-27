@@ -10,6 +10,9 @@ spring:
         password: pass
         driverClassName: org.postgresql.Driver
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        max-active: 5
+        max-pool: 10
+        max-idle: 0
     jpa:
         properties:
             hibernate:

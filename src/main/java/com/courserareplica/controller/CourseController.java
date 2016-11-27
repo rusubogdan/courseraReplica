@@ -38,7 +38,7 @@ public class CourseController {
             }
 
             // todo return dto
-            return courseTitle;
+            return course.getId().toString();
         }
 
         course = new Course();
@@ -54,7 +54,7 @@ public class CourseController {
 
         // todo return course DTO
         // todo return on course's page - in order to add there chapters and others
-        return courseTitle;
+        return course.getId().toString();
     }
 
     // todo might be added and the title in the link: id - title, then extract those
@@ -89,14 +89,19 @@ public class CourseController {
         }
 
         // update
-        if (!isEmpty(course.getName())) {
+        boolean isUpdated = false;
+        if (!isEmpty(course.getName()) && !course.getName().equals(courseObj.getName())) {
+            isUpdated = true;
             courseObj.setName(course.getName());
         }
-        if (!isEmpty(course.getDescription())) {
+        if (!isEmpty(course.getDescription()) && !course.getDescription().equals(courseObj.getDescription())) {
+            isUpdated = true;
             courseObj.setDescription(course.getDescription());
         }
 
-        courseService.save(courseObj);
+        if (isUpdated) {
+            courseService.save(courseObj);
+        }
 
         return "success";
     }

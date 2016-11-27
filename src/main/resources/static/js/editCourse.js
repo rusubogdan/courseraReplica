@@ -4,15 +4,17 @@ $(document).ready(function() {
     $('#updateCourse').on({
         'click': function (event) {
             event.preventDefault();
+
+            var courseId = $('#courseId').html();
             var course = {
-                    'id': $('#courseId').html(),
+                    'id': courseId,
                     'name': $('#courseTitle').val(),
                     'description': $courseDescription.summernote('code')
             };
 
             $.ajax({
                 type: 'POST',
-                url: '/courses/1/edit/do',
+                url: '/courses/'+ courseId + '/edit/do',
                 data: JSON.stringify(course), // without stringify, the Jackson mapping is failing
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',

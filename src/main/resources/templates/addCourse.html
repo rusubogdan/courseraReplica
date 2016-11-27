@@ -20,16 +20,17 @@
 <div class="container content">
     <div class="row">
         <div class="col-md-12 home-presentation">
-            Test
+            Adaugare curs
         </div>
 
         <div style="position: relative; margin-top: 150px;">
-            <div id="courseTitle">Title</div>
+            <textarea id="courseTitle">Title</textarea>
             <div id="courseDescription">Description</div>
         </div>
 
         <div id="saveCourse">
-            <input id="doSaveCourse" type="submit" value="Save" name="submit" />
+            <input id="doSaveCourse" type="submit" value="Salveaza" name="submit" class="btn btn-primary btn-lg sharp"/>
+            <!--<a th:href="@{/courses/__${course.id}__}" class="btn btn-primary btn-lg sharp">Finalizare</a>-->
         </div>
 
         <div>

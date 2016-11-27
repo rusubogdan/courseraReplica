@@ -10,15 +10,15 @@
     <div class="row courses">
         <div class="col-md-4" th:each="course : ${courses}">
             <div class="course-tile">
-                <h3 th:text="${course.name}" />
-                <p th:text="${course.description}" />
+                <h3 th:text="${course.name}" ></h3>
+                <div th:utext="${course.description}" ></div>
                 <a class="btn btn-info" th:href="@{/courses/__${course.id}__}">Deschide</a>
             </div>
         </div>
     </div>
 
     <div>
-        <a th:href="@{/courses/addCourse}">Add new course</a>
+        <a th:href="@{/courses/addCourse}" class="btn btn-primary btn-lg sharp">Add new course</a>
     </div>
 
 </div>
