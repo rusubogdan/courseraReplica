@@ -4,18 +4,27 @@
 </head>
 <body>
 	<nav th:replace="fragments/header :: navbar"></nav>
-	<div class="container">
-		<h1>Cursuri disponibile</h1>
+<div class="container">
+    <h1>Cursuri disponibile</h1 >
 
-		<div class="row courses">
-			<div class="col-md-4" th:each="course : ${courses}">
-				<div class="course-tile">
-					<h3 th:text="${course.name}" />
-					<p th:text="${course.description}" />
-					<a class="btn btn-info" th:href="@{/courses/1}">Deschide</a>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row courses">
+        <div class="col-md-4" th:each="course : ${courses}">
+            <div class="course-tile">
+                <h3 th:text="${course.name}" />
+                <p th:text="${course.description}" />
+                <a class="btn btn-info" th:href="@{/courses/__${course.id}__}">Deschide</a>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <a th:href="@{/courses/addCourse}">Add new course</a>
+    </div>
+
+</div>
+<script type="text/javascript">
+
+</script>
+
 </body>
 </html>

@@ -2,14 +2,16 @@ package com.courserareplica.controller;
 
 import com.courserareplica.model.Course;
 import com.courserareplica.service.CourseService;
-import com.stormpath.sdk.servlet.account.AccountResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
+
+import static org.springframework.util.ObjectUtils.isEmpty;
+
 
 @Controller
 @RequestMapping("/courses")
@@ -57,9 +59,9 @@ public class CourseController {
 
     // todo might be added and the title in the link: id - title, then extract those
     @RequestMapping(value = "/{courseId}")
-    public String coursePage(@PathParam(value = "courseId") Long courseId,
+    public String coursePage(@PathVariable(value = "courseId") Long courseId,
+                             @RequestParam(required = false, defaultValue = "0") Long chapter,
                              Model model) {
-
         Course course = courseService.getCourse(courseId);
 
         if (course == null) {
@@ -67,9 +69,55 @@ public class CourseController {
             return "redirect:/courses";
         }
 
+        // get chapters for course
+
+
         model.addAttribute("course", course);
 
-        return "courseView";
+        return "course";
+    }
+
+    @RequestMapping(value = "/{courseId}/edit/do", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public String courseEdit(@PathVariable Long courseId,
+                                @RequestBody Course course,
+                                Model model) {
+
+        Course courseObj = courseService.getCourse(courseId);
+        if (courseObj == null) {
+            return "redirect:/courses";
+        }
+
+        // update
+        if (!isEmpty(course.getName())) {
+            courseObj.setName(course.getName());
+        }
+        if (!isEmpty(course.getDescription())) {
+            courseObj.setDescription(course.getDescription());
+        }
+
+        courseService.save(courseObj);
+
+        return "success";
+    }
+
+    // todo might be added and the title in the link: id - title, then extract those
+    @RequestMapping(value = "/{courseId}/edit")
+    public String courseEditPage(@PathVariable(value = "courseId") Long courseId,
+                             @RequestParam(required = false, defaultValue = "0") Long chapter,
+                             Model model) {
+        Course course = courseService.getCourse(courseId);
+
+        if (course == null) {
+            // todo with message
+            return "redirect:/courses";
+        }
+
+        // get chapter for course
+
+        model.addAttribute("course", course);
+
+        return "courseEdit";
     }
 
     @RequestMapping

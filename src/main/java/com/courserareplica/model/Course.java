@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,6 +33,9 @@ public class Course {
     @Setter
     private Long ownerId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "course")
-    private Set<Chapter> chapters;
+    @OneToMany(mappedBy = "course")
+    @OrderBy("position ASC")
+    @Setter
+    @Getter
+    private List<Chapter> chapters;
 }

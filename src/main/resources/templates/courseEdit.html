@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/webjars/fontawesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link th:href="@{/css/summernote.css}" type="text/css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/css/main.css" type="text/css" />
+
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/summernote.min.js}" type="application/javascript"></script>
+    <script th:src="@{/js/common.js}" type="application/javascript"></script>
+    <script th:src="@{/js/editCourse.js}" type="application/javascript"></script>
+</head>
+<body>
+<nav th:replace="fragments/header :: navbar"></nav>
+<div class="container content">
+    <!--<form th:action="@{/courses/_${course.id}_/edit/do" method="post">-->
+        <div class="row">
+            <div class="col-md-10">
+                <div class="row">
+                    <textarea id="courseTitle" th:text="${course.name}"></textarea>
+                    <div id="courseId" hidden="hidden" th:text="${course.id}"></div>
+                </div>
+                <div class="row">
+                    <article id="courseDescription" class="col-md-12 course-content" th:utext="${course.description}"></article>
+                </div>
+                <div class="row">
+                    <article class="col-md-12 course-content">
+                        <h2>Sectiune 1</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id arcu ex. Aliquam rhoncus mauris vitae ex tristique volutpat. In tempus quam sed ante tincidunt, sed suscipit erat elementum. Aliquam convallis nisl quis neque accumsan egestas dignissim maximus sem. Donec sit amet finibus ex. Nunc lacinia ullamcorper justo non faucibus. Sed metus elit, commodo eu vulputate in, pulvinar a erat. Phasellus sed interdum augue, nec malesuada eros. Curabitur varius neque vel felis semper, eu ullamcorper neque finibus.</p>
+                        <p>Cras porttitor euismod diam quis varius. Ut et erat sagittis, scelerisque tellus et, commodo turpis. Aenean efficitur, diam eget interdum faucibus, mi nunc fringilla leo, a ullamcorper ex nunc vitae diam. Aliquam sem massa, dictum et leo in, condimentum vulputate elit. Sed dignissim lacinia augue, vitae feugiat nisi. Nunc faucibus, dui at ultrices egestas, tellus ipsum auctor massa, ac finibus risus tortor in nulla. Nunc sit amet pellentesque mi, quis venenatis dolor. Sed ac consectetur erat, vitae finibus eros. Integer pulvinar tempus velit non iaculis. Nunc id dignissim nisl. Donec pretium mollis tortor.</p>
+                        <p>Nullam ac lorem nec velit sollicitudin ultrices id ut risus. Vivamus posuere elit in mattis aliquet. In ac blandit urna, nec placerat eros. Phasellus vel dolor aliquet, interdum dolor quis, euismod nisi. Nam egestas quam consequat justo rhoncus dictum. Etiam dapibus vulputate vulputate. Donec et interdum neque. In efficitur ac ex id consequat. Vestibulum ultrices turpis sit amet quam viverra congue. In euismod varius arcu, ut pellentesque felis tempus vitae. Quisque id rutrum ipsum. Praesent vehicula mi et iaculis porttitor.</p>
+                    </article>
+                </div>
+                <div class="row">
+                    <article class="col-md-12 course-content">
+                        <h2>Sectiune 2</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id arcu ex. Aliquam rhoncus mauris vitae ex tristique volutpat. In tempus quam sed ante tincidunt, sed suscipit erat elementum. Aliquam convallis nisl quis neque accumsan egestas dignissim maximus sem. Donec sit amet finibus ex. Nunc lacinia ullamcorper justo non faucibus. Sed metus elit, commodo eu vulputate in, pulvinar a erat. Phasellus sed interdum augue, nec malesuada eros. Curabitur varius neque vel felis semper, eu ullamcorper neque finibus.</p>
+                        <p>Cras porttitor euismod diam quis varius. Ut et erat sagittis, scelerisque tellus et, commodo turpis. Aenean efficitur, diam eget interdum faucibus, mi nunc fringilla leo, a ullamcorper ex nunc vitae diam. Aliquam sem massa, dictum et leo in, condimentum vulputate elit. Sed dignissim lacinia augue, vitae feugiat nisi. Nunc faucibus, dui at ultrices egestas, tellus ipsum auctor massa, ac finibus risus tortor in nulla. Nunc sit amet pellentesque mi, quis venenatis dolor. Sed ac consectetur erat, vitae finibus eros. Integer pulvinar tempus velit non iaculis. Nunc id dignissim nisl. Donec pretium mollis tortor.</p>
+                        <p>Nullam ac lorem nec velit sollicitudin ultrices id ut risus. Vivamus posuere elit in mattis aliquet. In ac blandit urna, nec placerat eros. Phasellus vel dolor aliquet, interdum dolor quis, euismod nisi. Nam egestas quam consequat justo rhoncus dictum. Etiam dapibus vulputate vulputate. Donec et interdum neque. In efficitur ac ex id consequat. Vestibulum ultrices turpis sit amet quam viverra congue. In euismod varius arcu, ut pellentesque felis tempus vitae. Quisque id rutrum ipsum. Praesent vehicula mi et iaculis porttitor.</p>
+                    </article>
+                </div>
+            </div>
+
+            <div class="col-md-2 course-menu">
+                <div class="row menu-heading">Exemplu curs</div>
+                <div class="row">
+                    <div class="col-lg-2"><i class="fa fa-check" aria-hidden="true"></i></div>
+                    <div class="col-lg-10">Sectiune 1</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2"></div>
+                    <div class="col-xs-10">Sectiune 2</div>
+                </div>
+            </div>
+
+            <div>
+                <input id="updateCourse" type="submit" value="Salveaza" name="submit" class="btn btn-primary btn-lg sharp" />
+                <a th:href="@{/courses/__${course.id}__}" class="btn btn-primary btn-lg sharp">Finalizare</a>
+            </div>
+
+        </div>
+    <!--</form>-->
+</div>
+</body>
+</html>

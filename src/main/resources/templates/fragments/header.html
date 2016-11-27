@@ -16,7 +16,7 @@
 
     <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
     <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script th:src="@{/js/common.js}" type="application/javascript" rel="script"></script>
+    <script th:src="@{/js/common.js}" type="application/javascript"></script>
 </head>
 <body>
   <nav class="navbar navbar-default" th:fragment="navbar">
@@ -40,9 +40,12 @@
     <div class="collapse navbar-collapse" id="bs-navbar-collapsible">
       <ul class="nav navbar-nav">
         <li th:classappend="${activeNavButton == 'home'} ? 'active' : ''"><a th:href="@{/home}">Home</a></li>
-        <li><a th:href="@{/courses}">Cauta</a></li>
+        <li><a th:href="@{/courses}">Cursuri</a></li>
         <li class="dropdown">
-          <a th:classappend="${activeNavButton == 'course'} ? 'active' : ''" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cursurile mele<span class="caret"></span></a>
+          <a th:classappend="${activeNavButton == 'course'} ? 'active' : ''" href="#" class="dropdown-toggle"
+             data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              Cursurile mele
+              <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a th:href="@{/courses/course}">Curs 1 (50%)</a></li>
             <li><a href="#">Curs 2 (10%)</a></li>

@@ -3,7 +3,11 @@
  */
 
 $(document).ready(function() {
-    $('#courseTitle').summernote();
+    $('#courseTitle').summernote({
+        toolbar: [
+            ['fontsize', ['fontsize']]
+        ]
+    });
     $('#courseDescription').summernote();
 
     $('#saveCourse').ready(function() {
