@@ -32,4 +32,9 @@ public class CourseServiceImpl implements CourseService {
 
         return savedCourse;
     }
+
+	@Override
+	public Course getCourse(Long id) {
+		return repository.findOne(id);
+	}
 }
