@@ -5,35 +5,57 @@
 <body>
 <nav th:replace="fragments/header :: navbar"></nav>
 <div class="container content">
-	<div class="row">
-		<div class="col-md-10">
-			<div class="row">
-    			<h1 th:text="${course.name}"></h1>
-    		</div>
-            <div class="row">
-                <div class="col-md-12 course-content" th:utext="${course.description}"></div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="sidebar-nav-fixed affix">
+                <div class="well">
+                    <ul class="nav ">
+                        <li class="nav-header">Capitole</li>
+                        <li th:class="active" th:each="chapter : ${course.chapters}">
+                            <a th:href="@{/courses/__${course.id}__/ch/__${chapter.id}__}" th:text="${chapter.name}"></a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.well -->
             </div>
-    		<div class="row" th:each="chapter : ${course.chapters}">
-    			<div class="col-md-12 course-content">
-    				<h2 th:text="${chapter.name}"></h2>
-    				<div th:text="${chapter.id}" hidden="hidden"></div>
-		    		<p th:utext="${chapter.description}"></p>
-		    	</div>
-		    </div>
-            <div class="row">
-                <div>
-                    <a th:href="@{/courses/__${course.id}__/edit}" class="btn btn-primary btn-lg sharp">Editeaza</a>
+            <!--/sidebar-nav-fixed -->
+        </div>
+        <!--/span-->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <h1 th:text="${course.name}"></h1>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 course-content" th:utext="${course.description}"></div>
+                </div>
+                <!--<div class="row" th:each="chapter : ${course.chapters}">-->
+                    <!--<div class="col-md-12 course-content">-->
+                        <!--<h2 th:text="${chapter.name}"></h2>-->
+                        <!--<div th:text="${chapter.id}" hidden="hidden"></div>-->
+                        <!--<p th:utext="${chapter.description}"></p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="row">
+                    <div>
+                        <a th:href="@{/courses/__${course.id}__/edit}" class="btn btn-primary btn-lg sharp">Editeaza</a>
+                        <a th:href="@{/courses/__${course.id}__/ch/newChapter}" class="btn btn-primary btn-lg sharp">Adauga capitol</a>
+                    </div>
                 </div>
             </div>
-		</div>
-		<div class="col-md-2 course-menu">
-			<div class="row menu-heading" th:text="${course.name}"></div>
-			<div class="row" th:each="chapter : ${course.chapters}">
-				<div class="col-lg-2"><i class="fa fa-check" aria-hidden="true"></i></div>
-				<div class="col-lg-10" th:text="${chapter.name}"></div>
-			</div>
-		</div>
-	</div>
+            <!--<div class="col-md-2 course-menu">-->
+                <!--<div class="row menu-heading" th:text="${course.name}"></div>-->
+                <!--<div class="row" th:each="chapter : ${course.chapters}">-->
+                    <!--<div class="col-lg-2"><i class="fa fa-check" aria-hidden="true"></i></div>-->
+                    <!--<div class="col-lg-10" th:text="${chapter.name}"></div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+        <!--/span-->
+    </div>
+    <!--/row-->
 </div>
+<footer th:replace="fragments/footer :: footer"></footer>
+<!--/.fluid-container-->
 </body>
 </html>

@@ -17,6 +17,16 @@ public class ChapterServiceImpl implements ChapterService {
     private ChapterRepository chapterRepository;
 
     @Override
+    public Chapter save(Chapter chapter) {
+        return chapterRepository.save(chapter);
+    }
+
+    @Override
+    public Chapter findBy(Long id) {
+        return chapterRepository.findOne(id);
+    }
+
+    @Override
     public List<Chapter> findAll() {
         return chapterRepository.findAll();
     }

@@ -8,11 +8,14 @@
     <h1>Cursuri disponibile</h1 >
 
     <div class="row courses">
-        <div class="col-md-4" th:each="course : ${courses}">
-            <div class="course-tile">
-                <h3 th:text="${course.name}" ></h3>
-                <div th:utext="${course.description}" ></div>
-                <a class="btn btn-info" th:href="@{/courses/__${course.id}__}">Deschide</a>
+        <div class="col-md-4 course-panel" th:each="course : ${courses}">
+            <div class="box course-tile">
+                <div><h3 th:text="${course.name}" ></h3></div>
+                <!--<div th:utext="${#strings.length(course.description) ge 3} ? ${#strings.substring(course.description, 0, 3)} : ${course.description}" ></div>-->
+                <div class="course-description" th:utext="${course.description}" ></div>
+                <div>
+                    <a class="btn btn-info" th:href="@{/courses/__${course.id}__}">Deschide</a>
+                </div>
             </div>
         </div>
     </div>
@@ -25,6 +28,6 @@
 <script type="text/javascript">
 
 </script>
-
+    <footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

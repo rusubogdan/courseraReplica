@@ -1,5 +1,6 @@
 package com.courserareplica.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,6 +39,7 @@ public class Course implements Serializable {
     @OrderBy("position ASC")
     @Setter
     @Getter
+    @JsonManagedReference
     private List<Chapter> chapters;
 
     @Override

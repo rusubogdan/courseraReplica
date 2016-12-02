@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/webjars/fontawesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css" />
+    <link th:href="@{/css/summernote.css}" type="text/css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/css/main.css" type="text/css" />
+
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script th:src="@{/js/jquery-ui.min.js}"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/summernote.min.js}" type="application/javascript"></script>
+    <script th:src="@{/js/common.js}" type="application/javascript"></script>
+    <script th:src="@{/js/newChapter.js}" type="application/javascript"></script>
+</head>
+<body>
+<nav th:replace="fragments/header :: navbar"></nav>
+
+<div class="container">
+    <div class="row">
+        <h2>Left side Navigation bar (Fixed)</h2>
+
+        <p>Left side Navigation</p>
+    </div>
+</div>
+<div class="container content">
+    <div class="row">
+        <div class="col-md-10 course-edit-background">
+            <div class="row">
+                <div id="courseTitle" class="courseTitle new-chapter" th:text="${course.name}"></div>
+                <div id="courseId" hidden="hidden" th:text="${course.id}"></div>
+            </div>
+            <!--<div class="row">-->
+                <!--<article id="courseDescription" class="col-md-12 course-content course-description"-->
+                         <!--th:utext="${course.description}"></article>-->
+            <!--</div>-->
+            <div class="row">
+                <div id="acc-description">
+                        <h3>Descriere</h3>
+                        <div>
+                            <p th:utext="${course.description}"></p>
+                        </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div id="acc-chapters">
+                    <th:block data-th-each="chapter : ${course.chapters}">
+                        <h3 th:text="${chapter.name}"></h3>
+                        <div>
+                            <p th:utext="${course.description}"></p>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="chapter-edit-holder">
+                    <textarea id="chapter-title-0" placeholder="Insert new title"></textarea>
+                    <article id="chapter-description-0" class="col-md-12 course-content course-description"></article>
+                    <div class="new-chapter-actions-edit">
+                        <input id="new-chapter-save" type="submit" class="btn btn-primary btn-lg sharp" value="Salveaza" />
+                        <input id="new-chapter-cancel" type="submit" class="btn btn-primary btn-lg sharp" value="Anuleaza" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 course-menu">
+            <div class="row menu-heading" th:text="${course.name}"></div>
+            <div class="row">
+                <div class="col-lg-2"><i class="fa fa-check" aria-hidden="true"></i></div>
+                <div class="col-lg-10">Sectiune 1</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-10">Sectiune 2</div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <!--<input id="updateCourse" type="submit" value="Salveaza" name="submit" class="btn btn-primary btn-lg sharp" />-->
+        <a th:href="@{/courses/__${course.id}__}" class="btn btn-primary btn-lg sharp">Finalizare</a>
+    </div>
+</div>
+<div hidden="hidden" id="add-chapter-template">
+    <div class="new-chapter">
+        <div class="new-chapter-name">
+
+        </div>
+        <div class="new-chapter-description">
+
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

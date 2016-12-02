@@ -1,5 +1,7 @@
 package com.courserareplica.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +28,7 @@ public class Chapter implements Serializable {
     @JoinColumn(name = "course_id", nullable = false)
     @Getter
     @Setter
+    @JsonBackReference
     private Course course;
 
     /**

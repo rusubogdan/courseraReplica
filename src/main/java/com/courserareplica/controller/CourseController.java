@@ -1,14 +1,20 @@
 package com.courserareplica.controller;
 
+import com.courserareplica.model.Chapter;
 import com.courserareplica.model.Course;
+import com.courserareplica.service.ChapterService;
 import com.courserareplica.service.CourseService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -19,6 +25,9 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private ChapterService chapterService;
 
     @RequestMapping(value = "/ajax/saveCourse", method = RequestMethod.POST)
     @ResponseBody
@@ -80,8 +89,7 @@ public class CourseController {
     @RequestMapping(value = "/{courseId}/edit/do", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public String courseEdit(@PathVariable Long courseId,
-                                @RequestBody Course course,
-                                Model model) {
+                                @RequestBody Course course) {
 
         Course courseObj = courseService.getCourse(courseId);
         if (courseObj == null) {
@@ -104,6 +112,28 @@ public class CourseController {
         }
 
         return "success";
+    }
+
+    @RequestMapping(value = "/{courseId}/ch/{chapterId}")
+    public String chapterPage(@PathVariable Long courseId,
+                              @PathVariable Long chapterId,
+                              Model model) {
+        Course course = courseService.getCourse(courseId);
+        if (course == null) {
+            return "redirect:/courses";
+        }
+
+        Chapter chapter = chapterService.findBy(chapterId);
+
+        if (chapter == null) {
+            return "redirect:/courses";
+        } else if (!course.getChapters().contains(chapter)) {
+            return "redirect:/courses";
+        }
+
+
+
+        return "chapterView";
     }
 
     // todo might be added and the title in the link: id - title, then extract those
@@ -159,5 +189,43 @@ public class CourseController {
         model.addAttribute("success", true);
 
         return "courses";
+    }
+
+    @RequestMapping(value = "/{courseId}/ch/newChapter", method = RequestMethod.GET)
+    public String addNewChapter(@PathVariable Long courseId,
+                                Model model) {
+        Course course = courseService.getCourse(courseId);
+        if (course == null) {
+            model.addAttribute("error", "Course doesn't exist");
+            return "redirect:/courses";
+        }
+        model.addAttribute("course", course);
+
+        return "courseNewChapter";
+    }
+
+    @RequestMapping(value = "/{courseId}/ch/newChapter/do", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    public Map newChapterDo(@PathVariable Long courseId,
+                               @RequestBody Chapter chapter) {
+        Course existingCourse = courseService.getCourse(courseId);
+        if (existingCourse == null) {
+            Map map = new HashMap<>();
+            map.put("error", true);
+            map.put("cause", "course doesn't exist");
+
+            return map;
+        }
+
+        // if unique course - chapter
+        // TODO by name and course.name
+        // save this chapter
+        chapter.setCourse(existingCourse);
+        chapterService.save(chapter);
+
+        Map result = new HashMap<>();
+        result.put("result", existingCourse);
+
+        return result;
     }
 }

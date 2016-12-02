@@ -2,6 +2,8 @@
 server:
   port: 8090
 spring:
+    main:
+        web-environment: false
     thymeleaf:
         cache: false
     datasource:

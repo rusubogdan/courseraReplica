@@ -1,9 +1,12 @@
 /**
- * Common functionality for all pages
+ * Common functionality for all courses
  */
 
 $(document).ready(function() {
-    $('#courseDescription').summernote();
+    $('#courseDescription').summernote({
+        width: 750,
+        height: 300
+    });
 
     $('#saveCourse').ready(function() {
         $('#doSaveCourse').on({
@@ -23,8 +26,7 @@ $(document).ready(function() {
                 });
             }
         });
-    }
-    );
+    });
 });
 
 
