@@ -117,6 +117,17 @@ public class CourseController {
         return response;
     }
 
+    @RequestMapping(value = "/{courseId}/ch/{chapterId}/slideshow")
+    public String slideshowChapter(@PathVariable Long courseId,
+                                   @PathVariable Long chapterId,
+                                   Model model) {
+
+        model.addAttribute("course", courseService.getCourse(courseId));
+        model.addAttribute("chapter", chapterService.findBy(chapterId));
+
+        return "chapterSlideShow";
+    }
+
     @RequestMapping(value = "/{courseId}/ch/{chapterId}/par/{paragraphId}/edit", method = RequestMethod.POST)
     @ResponseBody
     public Map editParagraph(@PathVariable Long courseId,

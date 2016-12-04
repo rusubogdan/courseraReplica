@@ -361,3 +361,27 @@ div.courseTitle.new-chapter {
 
 
 /*end chapter view */
+
+
+/*slider*/
+
+.row.par-holder.slider {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 600px;
+    height: 300px;
+}
+.row.par-holder.slider .div-slider {
+    cursor: move;
+    position: absolute;
+    overflow: hidden;
+    left: 0px;
+    top: 0px;
+    width: 600px;
+    height: 300px;
+}
+
+#slides {
+    display:none;
+}

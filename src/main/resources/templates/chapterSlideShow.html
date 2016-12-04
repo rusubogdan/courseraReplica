@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/webjars/fontawesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    <link th:href="@{/css/summernote.css}" type="text/css" rel="stylesheet" />
+    <link th:href="@{/css/slick.css}" type="text/css" rel="stylesheet" />
+    <link th:href="@{/css/slick.scss}" type="text/css" rel="stylesheet" />
+    <link th:href="@{/css/slick-theme.css}" type="text/css" rel="stylesheet" />
+
+    <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
+
+    <link rel="stylesheet" href="/css/main.css" type="text/css" />
+
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script th:src="@{/js/summernote.min.js}" type="application/javascript"></script>
+    <script th:src="@{/js/common.js}" type="application/javascript"></script>
+    <script th:src="@{/js/slick.min.js}" type="application/javascript"></script>
+
+    <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
+
+    <script th:src="@{/js/chapterSlideShow.js}" type="application/javascript"></script>
+</head>
+<body>
+<nav th:replace="fragments/header :: navbar"></nav>
+<div class="container content">
+    <div class="row">
+        <div class="col-md-10 course-edit-background">
+            <div class="row">
+                <div id="course-title" class="course-title" th:text="${course.name}"></div>
+                <div id="course-id" hidden="hidden" th:text="${course.id}"></div>
+            </div>
+            <div class="row" th:with="chapterPosition=${chapter.position + 1}" >
+                <div id="chapter-title" class="chapter-title" th:text="${chapterPosition + '. ' + chapter.name}"></div>
+                <div id="chapter-id" hidden="hidden" th:text="${chapter.id}"></div>
+            </div>
+            <div class="row">
+                <article id="chapter-description" class="col-md-12 chapter-content chapter-description"
+                         th:utext="${chapter.description}"></article>
+            </div>
+
+            <div id="new-par-holder" class="row">
+
+            </div>
+
+            <div class="slider responsive">
+                <div th:each="par : ${chapter.paragraphs}">
+                    <div th:utext="${par.text}"></div>
+                </div>
+            </div>
+
+            <!--<div id="slider1_container" class="row par-holder slider" th:each="paragraph: ${chapter.paragraphs}">-->
+                <!--&lt;!&ndash;<div hidden="hidden" class="par-id-holder" th:text="${paragraph.id}"></div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="col-md-12 course-content" th:utext="${paragraph.text}"></div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a href="#" class="edit-href">Editeaza</a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<a href="#" class="delete-href">Sterge</a>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                <!--&lt;!&ndash; Slides Container &ndash;&gt;-->
+
+            <!--</div>-->
+            <div class="actions-holder">
+                <div id="no-of-paragraphs" hidden="hidden" th:text="${#lists.size(chapter.paragraphs)}"></div>
+                <!--<input id="new-paragraph" type="submit" value="Paragraf nou"/>-->
+            </div>
+        </div>
+    </div>
+    <div>
+        <!--<input id="updateCourse" type="submit" value="Salveaza" name="submit" class="btn btn-primary btn-lg sharp" />-->
+        <a th:href="@{/courses/__${course.id}__}" class="btn btn-primary btn-lg sharp">Inapoi la curs</a>
+    </div>
+</div>
+<div hidden="hidden" id="add-paragraph-template">
+    <div class="new-paragraph">
+        <div class="new-paragraph-text">
+
+        </div>
+    </div>
+</div>
+<input hidden="hidden" id="save-para-null" type="submit"/>
+<input hidden="hidden" id="save-edit-para-null" type="submit" value="salveaza"/>
+<input hidden="hidden" id="cancel-edit-para-null" type="submit" value="anuleaza"/>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

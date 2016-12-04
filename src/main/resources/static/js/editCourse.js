@@ -29,7 +29,10 @@ $(document).ready(function() {
     });
 
     // apply summernote on description
-    $courseDescription.summernote();
-    $courseDescription.summernote('code', $courseDescription.html());
+    $courseDescription.summernote({
+        width: 750,
+        height: 300
+    });
+//    $courseDescription.summernote('code', $courseDescription.html());
 
 });
