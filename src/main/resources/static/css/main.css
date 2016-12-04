@@ -328,3 +328,36 @@ div.courseTitle.new-chapter {
     margin-bottom: 0px;
     margin-top: 300px;
 }
+
+
+/*chapter view*/
+.row .course-title {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.row .chapter-title {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.row .chapter-description p {
+    font-size: 15px;
+    margin-top: 3%;
+    margin-left: 2%;
+}
+
+.row.par-holder {
+    margin-left: 2%;
+    margin-bottom: 5%;
+    background-color: #d7d7d7;
+}
+
+.row.par-holder .col-md-12.course-content {
+    border-radius: 5px;
+    padding-top: 5%;
+}
+
+
+
+/*end chapter view */

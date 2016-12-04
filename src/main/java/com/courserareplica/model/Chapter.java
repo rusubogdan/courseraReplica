@@ -2,11 +2,13 @@ package com.courserareplica.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table
@@ -43,6 +45,13 @@ public class Chapter implements Serializable {
     @Setter
     @Getter
     private String description;
+
+    @OneToMany(mappedBy = "chapter")
+    @Setter
+    @Getter
+    @OrderBy("position ASC")
+    @JsonManagedReference
+    private List<Paragraph> paragraphs;
 
     @Override
     public boolean equals(Object o) {

@@ -2,8 +2,10 @@ package com.courserareplica.controller;
 
 import com.courserareplica.model.Chapter;
 import com.courserareplica.model.Course;
+import com.courserareplica.model.Paragraph;
 import com.courserareplica.service.ChapterService;
 import com.courserareplica.service.CourseService;
+import com.courserareplica.service.ParagraphService;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class CourseController {
 
     @Autowired
     private ChapterService chapterService;
+
+    @Autowired
+    private ParagraphService paragraphService;
 
     @RequestMapping(value = "/ajax/saveCourse", method = RequestMethod.POST)
     @ResponseBody
@@ -86,6 +91,96 @@ public class CourseController {
         return "course";
     }
 
+    @RequestMapping(value = "/{courseId}/ch/{chapterId}/newParagraph", method = RequestMethod.POST)
+    @ResponseBody
+    public Map addNewChapter(@PathVariable Long courseId,
+                                @PathVariable Long chapterId,
+                                @RequestBody Paragraph paragraph) {
+        Map response = new HashMap<>();
+        Course course = courseService.getCourse(courseId);
+        if (course == null) {
+            response.put("error", true);
+            return response;
+        }
+
+        Chapter chapter = chapterService.findBy(chapterId);
+        if (chapter == null) {
+            response.put("error", true);
+            return response;
+        }
+
+        paragraph.setChapter(chapter);
+        paragraphService.save(paragraph);
+
+        response.put("success", true);
+
+        return response;
+    }
+
+    @RequestMapping(value = "/{courseId}/ch/{chapterId}/par/{paragraphId}/edit", method = RequestMethod.POST)
+    @ResponseBody
+    public Map editParagraph(@PathVariable Long courseId,
+                             @PathVariable Long chapterId,
+                             @PathVariable Long paragraphId,
+                             @RequestBody String paragraphText) {
+        Map response = new HashMap<>();
+        Course course = courseService.getCourse(courseId);
+        if (course == null) {
+            response.put("error", true);
+            return response;
+        }
+
+        Chapter chapter = chapterService.findBy(chapterId);
+        if (chapter == null) {
+            response.put("error", true);
+            return response;
+        }
+
+        Paragraph paragraph = paragraphService.findBy(paragraphId);
+        if (paragraph == null) {
+            response.put("error", true);
+            return response;
+        }
+
+        paragraph.setText(paragraphText);
+        paragraphService.save(paragraph);
+
+        response.put("success", true);
+
+        return response;
+    }
+
+    @RequestMapping(value = "/{courseId}/ch/{chapterId}/par/{paragraphId}/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public Map deleteParagraph(@PathVariable Long courseId,
+                             @PathVariable Long chapterId,
+                             @PathVariable Long paragraphId) {
+        Map response = new HashMap<>();
+        Course course = courseService.getCourse(courseId);
+        if (course == null) {
+            response.put("error", true);
+            return response;
+        }
+
+        Chapter chapter = chapterService.findBy(chapterId);
+        if (chapter == null) {
+            response.put("error", true);
+            return response;
+        }
+
+        Paragraph paragraph = paragraphService.findBy(paragraphId);
+        if (paragraph == null) {
+            response.put("error", true);
+            return response;
+        }
+
+        paragraphService.delete(paragraph);
+
+        response.put("success", true);
+
+        return response;
+    }
+
     @RequestMapping(value = "/{courseId}/edit/do", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public String courseEdit(@PathVariable Long courseId,
@@ -131,7 +226,8 @@ public class CourseController {
             return "redirect:/courses";
         }
 
-
+        model.addAttribute("course",course);
+        model.addAttribute("chapter",chapter);
 
         return "chapterView";
     }
