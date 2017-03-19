@@ -28,6 +28,20 @@ $(document).ready(function() {
                 position: noOfChapters
             };
 
+            if (chapter.name.trim() == '') {
+                noty({
+                    text: 'Empty name!',
+                    animation: {
+                        open: {height: 'toggle'},
+                        close: {height: 'toggle'},
+                        easing: 'swing',
+                        speed: 500 // opening & closing animation speed
+                    }
+                });
+
+                return;
+            }
+
             $.ajax({
                 type: 'POST',
                 url: '/courses/' + course.id + '/ch/newChapter/do',
@@ -36,11 +50,28 @@ $(document).ready(function() {
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
                     console.log(response);
-
+                    var n = noty({
+                        text: 'Saved!',
+                        animation: {
+                            open: {height: 'toggle'},
+                            close: {height: 'toggle'},
+                            easing: 'swing',
+                            speed: 500 // opening & closing animation speed
+                        }
+                    });
 
                 },
                 fail: function (error) {
                     console.log(error);
+                    noty({
+                        text: 'Error!',
+                        animation: {
+                            open: {height: 'toggle'},
+                            close: {height: 'toggle'},
+                            easing: 'swing',
+                            speed: 500 // opening & closing animation speed
+                        }
+                    });
                 }
             });
         }

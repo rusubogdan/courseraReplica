@@ -326,7 +326,17 @@ public class CourseController {
 
         // if unique course - chapter
         // TODO by name and course.name
+
+        if (chapter.getName().equals("")) {
+            Map map = new HashMap<>();
+            map.put("error", true);
+            map.put("cause", "empty chapter name");
+
+            return map;
+        }
+
         // save this chapter
+        chapterService.save(chapter);
         chapter.setCourse(existingCourse);
         chapterService.save(chapter);
 

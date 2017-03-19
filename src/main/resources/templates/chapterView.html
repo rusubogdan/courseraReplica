@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="/webjars/fontawesome/4.7.0/css/font-awesome.min.css" type="text/css" />
-    <link th:href="@{/css/summernote.css}" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/webjars/fontawesome/4.7.0/css/font-awesome.min.css" type="text/css"/>
+    <link th:href="@{/css/summernote.css}" type="text/css" rel="stylesheet"/>
 
-    <link rel="stylesheet" href="/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/css/main.css" type="text/css"/>
 
     <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
     <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -18,54 +18,64 @@
 <div class="container content">
     <div class="row">
         <div class="col-md-10 course-edit-background">
-            <div class="row">
-                <div id="course-title" class="course-title" th:text="${course.name}"></div>
-                <div id="course-id" hidden="hidden" th:text="${course.id}"></div>
-            </div>
-            <div class="row" th:with="chapterPosition=${chapter.position + 1}" >
-                <div id="chapter-title" class="chapter-title" th:text="${chapterPosition + '. ' + chapter.name}"></div>
-                <div id="chapter-id" hidden="hidden" th:text="${chapter.id}"></div>
-            </div>
-            <div class="row">
-                <article id="chapter-description" class="col-md-12 chapter-content chapter-description"
-                         th:utext="${chapter.description}"></article>
+            <div class="col-md-3 row">
+                <div class=" affix">
+                    <div class="well">
+                        <ul class="nav ">
+                            <li class="nav-header">Capitole</li>
+                            <li th:class="active" th:each="chapter : ${course.chapters}">
+                                <a th:href="@{/courses/__${course.id}__/ch/__${chapter.id}__}"
+                                   th:text="${chapter.name}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.well -->
+                </div>
+                <!--/sidebar-nav-fixed -->
             </div>
 
-            <div id="new-par-holder" class="row">
+            <div class="col-md-7 row">
+                <div class="row">
+                    <div id="course-title" class="course-title" th:text="${course.name}"></div>
+                    <div id="course-id" hidden="hidden" th:text="${course.id}"></div>
+                </div>
+                <div class="row" th:with="chapterPosition=${chapter.position + 1}">
+                    <div id="chapter-title" class="chapter-title"
+                         th:text="${chapterPosition + '. ' + chapter.name}"></div>
+                    <div id="chapter-id" hidden="hidden" th:text="${chapter.id}"></div>
+                </div>
+                <div class="row">
+                    <article id="chapter-description" class="col-md-12 chapter-content chapter-description"
+                             th:utext="${chapter.description}"></article>
+                </div>
 
-            </div>
+                <div id="new-par-holder" class="row">
 
-            <div class="row par-holder" th:each="paragraph: ${chapter.paragraphs}">
-                <div hidden="hidden" class="par-id-holder" th:text="${paragraph.id}"></div>
-                <div class="col-md-12 course-content" th:utext="${paragraph.text}"></div>
-                <div>
-                    <a href="#" class="edit-href">Editeaza</a>
-                    <a href="#" class="delete-href">Sterge</a>
+                </div>
+
+                <div class="row par-holder" th:each="paragraph: ${chapter.paragraphs}">
+                    <div hidden="hidden" class="par-id-holder" th:text="${paragraph.id}"></div>
+                    <div class="col-md-12 course-content" th:utext="${paragraph.text}"></div>
+                    <div>
+                        <a href="#" class="edit-href">Editeaza</a>
+                        <a href="#" class="delete-href">Sterge</a>
+                    </div>
+                </div>
+                <div class="actions-holder">
+                    <div id="no-of-paragraphs" hidden="hidden" th:text="${#lists.size(chapter.paragraphs)}"></div>
+                    <input id="new-paragraph" type="submit" value="Paragraf nou"/>
                 </div>
             </div>
-            <div class="actions-holder">
-                <div id="no-of-paragraphs" hidden="hidden" th:text="${#lists.size(chapter.paragraphs)}"></div>
-                <input id="new-paragraph" type="submit" value="Paragraf nou"/>
+            <div>
+                <!--<input id="updateCourse" type="submit" value="Salveaza" name="submit" class="btn btn-primary btn-lg sharp" />-->
+                <a th:href="@{/courses/__${course.id}__}" class="btn btn-primary btn-lg sharp">Inapoi la curs</a>
             </div>
         </div>
-
-        <!--<div class="col-md-2 course-menu">-->
-            <!--<div class="row menu-heading">Exemplu curs</div>-->
-            <!--<div class="row">-->
-                <!--<div class="col-lg-2"><i class="fa fa-check" aria-hidden="true"></i></div>-->
-                <!--<div class="col-lg-10">Sectiune 1</div>-->
-            <!--</div>-->
-            <!--<div class="row">-->
-                <!--<div class="col-xs-2"></div>-->
-                <!--<div class="col-xs-10">Sectiune 2</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    </div>
-    <div>
-        <!--<input id="updateCourse" type="submit" value="Salveaza" name="submit" class="btn btn-primary btn-lg sharp" />-->
-        <a th:href="@{/courses/__${course.id}__}" class="btn btn-primary btn-lg sharp">Inapoi la curs</a>
     </div>
 </div>
+
+
+<!--templates-->
 <div hidden="hidden" id="add-paragraph-template">
     <div class="new-paragraph">
         <div class="new-paragraph-text">
@@ -77,6 +87,9 @@
 <input hidden="hidden" id="save-edit-para-null" type="submit" value="salveaza"/>
 <input hidden="hidden" id="cancel-edit-para-null" type="submit" value="anuleaza"/>
 
+
+<!--footer area-->
 <footer th:replace="fragments/footer :: footer"></footer>
+
 </body>
 </html>
