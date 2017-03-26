@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-
-
     $('#new-paragraph').on({
         'click': function (event) {
             event.preventDefault();
@@ -144,6 +142,41 @@ $(document).ready(function() {
                         });
                     }
                 })
+            }
+        });
+    });
+
+    $('.completed-checker.unchecked').waypoint(function (direction) {
+        var par = $(this.element);
+
+        // waypoint can't update it's controlled elements dynamically, yet
+        if (par.attr('class') === 'completed-checker checked') {
+            return;
+        }
+
+        var parId = par.parents('.par-holder').children('.par-id-holder').html();
+        var chapterId = $('#chapter-id').html();
+
+        var request = {
+            paragraphId: parId,
+            chapterId: chapterId
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/v1/ajax/completeParagraph',
+            data: JSON.stringify(request), // without stringify, the Jackson mapping is failing
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                console.log(response);
+
+                par.removeClass('unchecked')
+                    .addClass('checked');
+
+            },
+            fail: function (error) {
+                console.log(error);
             }
         });
     });

@@ -18,8 +18,8 @@ public class UserActivity {
     private String userId;
 
     @Column
-    private Integer chapterId;
+    private Long chapterId;
 
     @Column
-    private Integer paragraphId;
+    private Long paragraphId;
 }

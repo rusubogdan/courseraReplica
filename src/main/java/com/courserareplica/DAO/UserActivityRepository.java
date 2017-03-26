@@ -9,9 +9,11 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
 
     List<UserActivity> findAll();
 
-    List<UserActivity> findBy(String userId);
+    UserActivity save(UserActivity userActivity);
 
-    List<UserActivity> findBy(String userId, Integer chapterId);
+    List<UserActivity> findByUserId(String userId);
 
-    List<UserActivity> findBy(String userId, Integer chapterId, Integer paragraphId);
+    List<UserActivity> findByUserIdAndChapterId(String userId, Long chapterId);
+
+    List<UserActivity> findByUserIdAndChapterIdAndParagraphId(String userId, Long chapterId, Long paragraphId);
 }

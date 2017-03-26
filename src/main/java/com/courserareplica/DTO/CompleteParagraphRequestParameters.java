@@ -6,5 +6,5 @@ import lombok.Data;
 public class CompleteParagraphRequestParameters {
     private Long chapterId;
     private Long paragraphId;
-    private Long userId;
+    private String userId;
 }
