@@ -12,6 +12,8 @@
     <script th:src="@{/js/summernote.min.js}" type="application/javascript"></script>
     <script th:src="@{/js/common.js}" type="application/javascript"></script>
     <script th:src="@{/js/chapterView.js}" type="application/javascript"></script>
+    <script th:src="@{/js/jquery.appear.js}" type="application/javascript"></script>
+    <script th:src="@{/js/waypoints.min.js}" type="application/javascript"></script>
 </head>
 <body>
 <nav th:replace="fragments/header :: navbar"></nav>
@@ -19,7 +21,7 @@
     <div class="row">
         <div class="col-md-10 course-edit-background">
             <div class="col-md-3 row">
-                <div class=" affix">
+                <div class="affix">
                     <div class="well">
                         <ul class="nav ">
                             <li class="nav-header">Capitole</li>
@@ -55,6 +57,11 @@
 
                 <div class="row par-holder" th:each="paragraph: ${chapter.paragraphs}">
                     <div hidden="hidden" class="par-id-holder" th:text="${paragraph.id}"></div>
+                    <div class="paragraph-details">
+                        <!--checked class means it was completed-->
+                        <div th:class="${paragraph.completed ? 'completed-checker checked' : 'completed-checker unchecked'}"></div>
+                    </div>
+
                     <div class="col-md-12 course-content" th:utext="${paragraph.text}"></div>
                     <div>
                         <a href="#" class="edit-href">Editeaza</a>
@@ -68,7 +75,7 @@
             </div>
             <div>
                 <!--<input id="updateCourse" type="submit" value="Salveaza" name="submit" class="btn btn-primary btn-lg sharp" />-->
-                <a th:href="@{/courses/__${course.id}__}" class="btn btn-primary btn-lg sharp">Inapoi la curs</a>
+                <a th:href="@{/courses/__${course.id}__}" id="backTo" class="btn btn-primary btn-lg sharp">Inapoi la curs</a>
             </div>
         </div>
     </div>

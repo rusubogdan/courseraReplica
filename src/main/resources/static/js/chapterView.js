@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+
+
     $('#new-paragraph').on({
         'click': function (event) {
             event.preventDefault();
@@ -16,7 +18,13 @@ $(document).ready(function() {
             var newParHolder = $('#new-par-holder');
             newParHolder.append(newParagraph);
             var newParagraphText = newParagraph.find('.new-paragraph-text');
-            newParagraphText.summernote();
+            newParagraphText.summernote({
+                height: 200,
+                focus: true
+            });
+
+
+            newParagraphText.trigger('focus');
             // at save
 
             var saveBtn = $('#save-para-null').clone();
@@ -52,8 +60,6 @@ $(document).ready(function() {
                     });
                 }
             });
-
-
         }
     });
 

@@ -94,8 +94,8 @@ public class CourseController {
     @RequestMapping(value = "/{courseId}/ch/{chapterId}/newParagraph", method = RequestMethod.POST)
     @ResponseBody
     public Map addNewChapter(@PathVariable Long courseId,
-                                @PathVariable Long chapterId,
-                                @RequestBody Paragraph paragraph) {
+                             @PathVariable Long chapterId,
+                             @RequestBody Paragraph paragraph) {
         Map response = new HashMap<>();
         Course course = courseService.getCourse(courseId);
         if (course == null) {
@@ -164,8 +164,8 @@ public class CourseController {
     @RequestMapping(value = "/{courseId}/ch/{chapterId}/par/{paragraphId}/delete", method = RequestMethod.POST)
     @ResponseBody
     public Map deleteParagraph(@PathVariable Long courseId,
-                             @PathVariable Long chapterId,
-                             @PathVariable Long paragraphId) {
+                               @PathVariable Long chapterId,
+                               @PathVariable Long paragraphId) {
         Map response = new HashMap<>();
         Course course = courseService.getCourse(courseId);
         if (course == null) {
@@ -195,7 +195,7 @@ public class CourseController {
     @RequestMapping(value = "/{courseId}/edit/do", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public String courseEdit(@PathVariable Long courseId,
-                                @RequestBody Course course) {
+                             @RequestBody Course course) {
 
         Course courseObj = courseService.getCourse(courseId);
         if (courseObj == null) {
@@ -237,8 +237,17 @@ public class CourseController {
             return "redirect:/courses";
         }
 
-        model.addAttribute("course",course);
-        model.addAttribute("chapter",chapter);
+        // modify the paragraphs of courses
+        for (Paragraph paragraph : chapter.getParagraphs()) {
+            paragraph.setCompleted(false);
+
+            // user id ; chapter id; list of par
+            // map par id - true/false
+
+        }
+
+        model.addAttribute("course", course);
+        model.addAttribute("chapter", chapter);
 
         return "chapterView";
     }
@@ -246,8 +255,8 @@ public class CourseController {
     // todo might be added and the title in the link: id - title, then extract those
     @RequestMapping(value = "/{courseId}/edit")
     public String courseEditPage(@PathVariable(value = "courseId") Long courseId,
-                             @RequestParam(required = false, defaultValue = "0") Long chapter,
-                             Model model) {
+                                 @RequestParam(required = false, defaultValue = "0") Long chapter,
+                                 Model model) {
         Course course = courseService.getCourse(courseId);
 
         if (course == null) {
@@ -276,12 +285,12 @@ public class CourseController {
 
         return "courses";
     }
-    
+
     @RequestMapping(value = "/course", method = RequestMethod.GET)
     public String viewCourse(Model model) {
-    	model.addAttribute("activeNavButton", "course");
-    	model.addAttribute("course.title", "Cursul exemplu");
-    	model.addAttribute("course.author", "Autor");
+        model.addAttribute("activeNavButton", "course");
+        model.addAttribute("course.title", "Cursul exemplu");
+        model.addAttribute("course.author", "Autor");
         return "course";
     }
 
@@ -314,7 +323,7 @@ public class CourseController {
     @RequestMapping(value = "/{courseId}/ch/newChapter/do", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public Map newChapterDo(@PathVariable Long courseId,
-                               @RequestBody Chapter chapter) {
+                            @RequestBody Chapter chapter) {
         Course existingCourse = courseService.getCourse(courseId);
         if (existingCourse == null) {
             Map map = new HashMap<>();

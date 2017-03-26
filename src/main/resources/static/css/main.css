@@ -404,3 +404,30 @@ div.courseTitle.new-chapter {
 #slides {
     display:none;
 }
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1800px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .affix {
+        display: none;
+    }
+}
+
+.completed-checker {
+    width: 25px;
+    height: 25px;
+}
+
+.unchecked {
+    background: url("images/unchecked.png") no-repeat;
+    background-size: contain;
+}
+
+.checked {
+    background: url("images/checked.png") no-repeat;
+    background-size: contain;
+}

@@ -1,6 +1,7 @@
 package com.courserareplica.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,11 @@ public class Paragraph implements Serializable {
     @Setter
     @Getter
     private String text;
+
+    @Setter
+    @Getter
+    @Transient
+    private Boolean completed;
 
     @Column
     @Setter
