@@ -13,4 +13,6 @@ public interface CourseService {
     Course getCourse(String name);
 
     Course save(Course course);
+
+    List<Course> getUserCourses();
 }

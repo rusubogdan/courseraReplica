@@ -18,6 +18,9 @@ public class UserActivity {
     private String userId;
 
     @Column
+    private Long courseId;
+
+    @Column
     private Long chapterId;
 
     @Column

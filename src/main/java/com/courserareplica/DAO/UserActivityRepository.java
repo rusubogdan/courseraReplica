@@ -16,4 +16,6 @@ public interface UserActivityRepository extends CrudRepository<UserActivity, Int
     List<UserActivity> findByUserIdAndChapterId(String userId, Long chapterId);
 
     List<UserActivity> findByUserIdAndChapterIdAndParagraphId(String userId, Long chapterId, Long paragraphId);
+
+    List<UserActivity> findByUserIdAndCourseId(String userId, Long courseId);
 }

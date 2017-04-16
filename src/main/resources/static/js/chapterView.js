@@ -156,10 +156,12 @@ $(document).ready(function() {
 
         var parId = par.parents('.par-holder').children('.par-id-holder').html();
         var chapterId = $('#chapter-id').html();
+        var courseId = $('#course-id').html();
 
         var request = {
-            paragraphId: parId,
-            chapterId: chapterId
+            courseId: courseId,
+            chapterId: chapterId,
+            paragraphId: parId
         };
 
         $.ajax({

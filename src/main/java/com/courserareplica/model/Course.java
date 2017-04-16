@@ -30,10 +30,16 @@ public class Course implements Serializable {
     @Getter
     private String description;
 
+    // identify by account.getHref()
     @Column
     @Getter
     @Setter
-    private Long ownerId;
+    private String ownerId;
+
+    @Transient
+    @Getter
+    @Setter
+    private Integer percentage; // keep it simple
 
     @OneToMany(mappedBy = "course")
     @OrderBy("position ASC")

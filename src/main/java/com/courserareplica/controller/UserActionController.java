@@ -38,6 +38,7 @@ public class UserActionController {
         Account account = accountResolver.getAccount(request);
         userActivity.setUserId(account.getHref());
         userActivity.setChapterId(requestParameters.getChapterId());
+        userActivity.setCourseId(requestParameters.getCourseId());
 
         if (!StringUtils.isEmpty(requestParameters.getChapterId())) {
             userActivity.setParagraphId(requestParameters.getParagraphId());

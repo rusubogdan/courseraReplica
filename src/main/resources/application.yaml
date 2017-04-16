@@ -7,10 +7,10 @@ spring:
     thymeleaf:
         cache: false
     datasource:
-        url: jdbc:postgresql://ec2-54-75-230-140.eu-west-1.compute.amazonaws.com:5432/d937a6m4a2etjg?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory
-        username: irxpksrnqkmczr
+        url: jdbc:postgresql://ec2-54-75-224-100.eu-west-1.compute.amazonaws.com:5432/d2f531u6mujsja?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory
+        username: naluedgflsuybx
         password: pass
-        driverClassName: org.postgresql.Driver
+        driver-class-name: org.postgresql.Driver
         dialect: org.hibernate.dialect.PostgreSQLDialect
         max-active: 5
         max-pool: 10
@@ -25,14 +25,14 @@ spring:
 security:
     basic:
         enabled: false
-stormpath:
-    application:
-        href: https://api.stormpath.com/v1/applications/2QaziTvNf6JPRKpnE3FQ8a
-    web:
-        login:
-            nextUri: /home
-        logout:
-            nextUri: /public?action=logout
+#stormpath:
+#    application:
+#        href: https://api.stormpath.com/v1/applications/2QaziTvNf6JPRKpnE3FQ8a
+#    web:
+#        login:
+#            nextUri: /home
+#        logout:
+#            nextUri: /public?action=logout
 
 
 ##  spring:

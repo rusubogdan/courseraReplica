@@ -37,4 +37,9 @@ public class CourseServiceImpl implements CourseService {
 
         return savedCourse;
     }
+
+    @Override
+    public List<Course> getUserCourses() {
+        return null;
+    }
 }

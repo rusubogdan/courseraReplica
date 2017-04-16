@@ -3,17 +3,20 @@ package com.courserareplica.controller;
 import com.courserareplica.model.Chapter;
 import com.courserareplica.model.Course;
 import com.courserareplica.model.Paragraph;
+import com.courserareplica.model.UserActivity;
 import com.courserareplica.service.ChapterService;
 import com.courserareplica.service.CourseService;
 import com.courserareplica.service.ParagraphService;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.json.JSONObject;
+import com.courserareplica.service.UserActivityService;
+import com.stormpath.sdk.account.Account;
+import com.stormpath.sdk.servlet.account.AccountResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,11 +37,15 @@ public class CourseController {
     @Autowired
     private ParagraphService paragraphService;
 
+    @Autowired
+    private UserActivityService userActivityService;
+
     @RequestMapping(value = "/ajax/saveCourse", method = RequestMethod.POST)
     @ResponseBody
     public String saveCourse(
             @RequestParam(value = "courseTitle") String courseTitle,
-            @RequestParam(value = "courseDescription") String courseDescription) {
+            @RequestParam(value = "courseDescription") String courseDescription,
+            ServletRequest request) {
 
         // TODO validate not null and return message
 
@@ -59,10 +66,13 @@ public class CourseController {
         course.setName(courseTitle);
         course.setDescription(courseDescription);
 
-//        AccountResolver.INSTANCE.getAccount()
+        Account account = AccountResolver.INSTANCE.getAccount(request);
 
-        // todo auth user id
-        course.setOwnerId(1L);
+        if (account == null) {
+            return null;
+        }
+
+        course.setOwnerId(account.getHref());
 
         courseService.save(course);
 
@@ -223,8 +233,10 @@ public class CourseController {
     @RequestMapping(value = "/{courseId}/ch/{chapterId}")
     public String chapterPage(@PathVariable Long courseId,
                               @PathVariable Long chapterId,
+                              ServletRequest request,
                               Model model) {
         Course course = courseService.getCourse(courseId);
+
         if (course == null) {
             return "redirect:/courses";
         }
@@ -237,17 +249,23 @@ public class CourseController {
             return "redirect:/courses";
         }
 
-        // modify the paragraphs of courses
+        Account account = AccountResolver.INSTANCE.getAccount(request);
+
+        if (account == null) {
+            return "redirect:/courses";
+        }
+
+        // for each paragraph, set if it was viewed by this user
         for (Paragraph paragraph : chapter.getParagraphs()) {
-            paragraph.setCompleted(false);
-
-            // user id ; chapter id; list of par
-            // map par id - true/false
-
+            List<UserActivity> activities = userActivityService.findByUserIdAndChapterIdAndParagraphId(account.getHref(), chapter.getId(), paragraph.getId());
+            paragraph.setCompleted((activities != null && !activities.isEmpty()));
         }
 
         model.addAttribute("course", course);
         model.addAttribute("chapter", chapter);
+
+        List<Course> userCourses = userActivityService.getUserCourses(account);
+        model.addAttribute("userCourses", userCourses);
 
         return "chapterView";
     }
