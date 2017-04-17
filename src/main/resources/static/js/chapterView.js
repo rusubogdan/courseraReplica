@@ -94,6 +94,198 @@ $(document).ready(function() {
        });
     });
 
+    $('.delete-note-btn.delete-note').each(function () {
+        $(this).on({
+            'click': function (event) {
+                var deleteBtn = $(event.target);
+
+                var noteHolderDiv = deleteBtn.parents('.note-holder');
+
+                noty({
+                    text: 'Stergere nota?',
+                    type: 'confirm',
+                    dismissQueue: false,
+                    layout: 'center',
+                    theme: 'defaultTheme',
+                    buttons: [
+                        {
+                            addClass: 'btn btn-primary',
+                            text: 'Yes',
+                            onClick: function ($noty) {
+                                var requestData = {
+
+                                };
+                                var deleteSuccess = false;
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/v1/ajax/userNote/deleteUserNote',
+                                    data: JSON.stringify(requestData),
+                                    dataType: 'json',
+                                    contentType: 'application/json; charset=utf-8',
+                                    success: function (response) {
+                                        console.log(response);
+
+                                        if (!response.error) {
+                                            deleteSuccess = true;
+
+                                            $noty.close();
+
+                                            noteHolderDiv.children('.tooltip').children('.hover-text').html('');
+                                            noteHolderDiv.children('.tooltip').children('.tooltiptext').html('');
+                                            noteHolderDiv.children('.textarea-content').val('');
+
+                                            noty({text: 'Nota stearsa!', type: 'success', timeout: 1000});
+                                        }
+                                    },
+                                    fail: function (error) {
+                                        noty({text: 'Eroare steargere!', type: 'error', timeout: 2000});
+                                        console.log(error);
+                                    }
+                                });
+
+                                $noty.close();
+
+                                noteHolderDiv.children('.tooltip').children('.hover-text').html('');
+                                noteHolderDiv.children('.tooltip').children('.tooltiptext').html('');
+                                noteHolderDiv.children('.textarea-content').val('');
+
+                                noty({text: 'Nota stearsa!', type: 'success', timeout: 1000});
+                            }
+                        },
+                        {
+                            addClass: 'btn btn-danger',
+                            text: 'No',
+                            onClick: function ($noty) {
+                                $noty.close();
+//                                noty({text: 'Cancel note removal', type: 'error', timeout: 1000});
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+    });
+
+    $('.add-note-btn.add-note').each(function () {
+       $(this).on({
+           'click': function (event) {
+
+               // TODO trigger cancel to all others
+
+               // hide current elem
+               var targetDiv = $(event.target);
+               targetDiv.attr('hidden', 'hidden');
+
+               // hide delete note element
+               targetDiv.parents('.note-holder').children('.delete-note-btn').attr('hidden', 'hidden');
+
+               var saveBtn = $('#save-edit-para-null').clone();
+               saveBtn.attr('id', 'save-edit-para-some')
+                   .removeAttr('hidden');
+               var cancelBtn = $('#cancel-edit-para-null').clone();
+               cancelBtn.attr('id', 'cancel-edit-para-some')
+                   .removeAttr('hidden');
+
+               targetDiv.after(saveBtn)
+                        .after(cancelBtn);
+
+               // make the textarea visible
+               var textarea = targetDiv.parents('.note-holder').children('.textarea-content');
+               textarea.removeAttr('hidden')
+                       .attr('contenteditable', 'true');
+
+               saveBtn.on({
+                    'click': function (event) {
+                        var content = textarea.val();
+
+                        if (content.length < 10) {
+                            noty({
+                                text: 'Minim 10 caractere!',
+                                type: 'warning',
+                                animation: {
+                                    open: {height: 'toggle'},
+                                    close: {height: 'toggle'},
+                                    easing: 'swing',
+                                    speed: 500 // opening & closing animation speed
+                                },
+                                timeout: 500
+                            });
+
+                            return;
+                        }
+
+                        // hide delete note button
+                        var deleteNoteBtn = textarea.parents('.note-holder').children('.delete-note-btn.delete-note');
+                        deleteNoteBtn.attr('hidden', 'hidden');
+
+                        var paragraphHolder = targetDiv.parents('.row.par-holder').children('.par-id-holder');
+                        var requestData = {
+                            paragraphId: paragraphHolder.html(),
+                            note: content
+                        };
+
+                        var saveSuccess = false;
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/v1/ajax/userNote/saveUserNote',
+                            data: JSON.stringify(requestData),
+                            dataType: 'json',
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (response) {
+                                console.log(response);
+
+                                if (!response.error) {
+                                    saveSuccess = true;
+                                    var spanHoverText = textarea.parents('.note-holder').children('.tooltip').children('.hover-text');
+                                    spanHoverText.html(content.substring(0, 8) + '...');
+
+                                    var spanContent = textarea.parents('.note-holder').children('.tooltip').children('.tooltiptext');
+                                    spanContent.html(content);
+                                    spanContent.parents('.tooltip').removeAttr('hidden');
+
+                                    // show delete note button
+                                    deleteNoteBtn.removeAttr('hidden');
+                                }
+                            },
+                            fail: function (error) {
+                                console.log(error);
+                            }
+                        });
+
+                        textarea.attr('hidden', 'hidden');
+
+                        saveBtn.remove();
+                        cancelBtn.remove();
+
+                        // show the add note image
+                        targetDiv.removeAttr('hidden');
+
+
+
+                    }
+               });
+
+               cancelBtn.on({
+                   'click': function (event) {
+                       saveBtn.remove();
+                       cancelBtn.remove();
+
+                       // hide textarea
+                       textarea.attr('hidden', 'hidden');
+
+                       // show the add note image
+                       targetDiv.removeAttr('hidden');
+
+                       // hide delete note element
+                       targetDiv.parents('.note-holder').children('.delete-note-btn').removeAttr('hidden');
+                   }
+               });
+           }
+       });
+    });
+
     $('.edit-href').each(function (index) {
         $(this).on({
             'click': function (event) {

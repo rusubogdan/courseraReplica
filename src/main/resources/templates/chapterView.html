@@ -12,6 +12,7 @@
     <script th:src="@{/js/summernote.min.js}" type="application/javascript"></script>
     <!--<script th:src="@{/js/waypoint.js}" type="application/javascript"></script>-->
     <script th:src="@{/js/jquery.waypoints.min.js}" type="application/javascript"></script>
+    <script th:src="@{/js/jquery.noty.packaged.min.js}" type="application/javascript"></script>
     <script th:src="@{/js/common.js}" type="application/javascript"></script>
     <script th:src="@{/js/chapterView.js}" type="application/javascript"></script>
 
@@ -25,6 +26,7 @@
                 <div class="affix">
                     <div class="well">
                         <ul class="nav ">
+                            <li class="nav-header" th:text="${course.name}"></li>
                             <li class="nav-header">Capitole</li>
                             <li th:class="active" th:each="chapter : ${course.chapters}">
                                 <a th:href="@{/courses/__${course.id}__/ch/__${chapter.id}__}"
@@ -64,9 +66,26 @@
                     </div>
 
                     <div class="col-md-12 course-content" th:utext="${paragraph.text}"></div>
-                    <div>
-                        <a href="#" class="edit-href">Editeaza</a>
-                        <a href="#" class="delete-href">Sterge</a>
+
+                    <div class="par-actions">
+                        <div hidden="hidden" class="par-id-holder" th:text="${paragraph.id}"></div>
+                        <div class="par-buttons">
+                            <a href="#" class="edit-href">Editeaza</a>
+                            <a href="#" class="delete-href">Sterge</a>
+                        </div>
+                        <div class="note-holder">
+                            <div class="tooltip" th:hidden="${paragraph.note == null}">
+                                <span class="hover-text" th:text="${paragraph.note != null} ? ${#strings.substring(paragraph.note, 0, 8) + '...'}"></span>
+                                <span class="tooltiptext" th:text="${paragraph.note}"></span>
+                            </div>
+                            <textarea hidden="hidden" class="textarea-content"></textarea>
+                            <div class="add-note-btn add-note">
+                                <span class="tooltiptext">Adauga/modifica nota</span>
+                            </div>
+                            <div class="delete-note-btn delete-note" th:hidden="${paragraph.note == null}">
+                                <span class="tooltiptext">Sterge nota</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="actions-holder">
@@ -94,6 +113,7 @@
 <input hidden="hidden" id="save-para-null" type="submit"/>
 <input hidden="hidden" id="save-edit-para-null" type="submit" value="salveaza"/>
 <input hidden="hidden" id="cancel-edit-para-null" type="submit" value="anuleaza"/>
+<input hidden="hidden" id="delete-edit-para-null" type="submit" value="sterge"/>
 
 
 <!--footer area-->

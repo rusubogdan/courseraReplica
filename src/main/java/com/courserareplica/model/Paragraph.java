@@ -41,6 +41,11 @@ public class Paragraph implements Serializable {
     @JsonBackReference
     private Chapter chapter;
 
+    @Transient
+    @Getter
+    @Setter
+    private String note;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -431,3 +431,102 @@ div.courseTitle.new-chapter {
     background: url("images/checked.png") no-repeat;
     background-size: contain;
 }
+
+.add-note-btn {
+    width: 30px;
+    height: 30px;
+    position: relative;
+}
+
+.delete-note-btn {
+    width: 30px;
+    height: 30px;
+    position: relative;
+}
+
+.add-note {
+    background: url("images/note.png") no-repeat;
+    background-size: contain;
+    float: right;
+}
+
+.delete-note {
+    background: url("images/delete-note.png") no-repeat;
+    background-size: contain;
+    float: right;
+}
+
+.add-note .tooltiptext {
+    visibility: hidden;
+    width: 170px;
+    background-color: #37a61d;
+    color: #e9ebee;
+    text-align: right;
+    border-radius: 10px;
+    padding: 5px 10px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -35px;
+    left: -120%;
+}
+
+.delete-note .tooltiptext {
+    visibility: hidden;
+    width: 130px;
+    background-color: #a6190d;
+    color: #e9ebee;
+    text-align: right;
+    border-radius: 10px;
+    padding: 5px 10px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -35px;
+    left: -120%;
+}
+
+.add-note:hover .tooltiptext {
+    visibility: visible;
+}
+
+.delete-note:hover .tooltiptext {
+    visibility: visible;
+}
+
+.note-holder {
+    float: right;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    /*border-bottom: 1px dotted black;*/
+    opacity: 1;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 180px;
+    background-color: #eddc62;
+    color: #378fda;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -50px;
+    left: 200%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.hover-text {
+    margin-right: 20px;
+}

@@ -3,13 +3,15 @@ package com.courserareplica.controller;
 
 import com.courserareplica.DTO.CompleteParagraphRequestParameters;
 import com.courserareplica.DTO.CompleteParagraphResponse;
+import com.courserareplica.DTO.UserNoteRequest;
+import com.courserareplica.DTO.UserNoteResponse;
 import com.courserareplica.model.UserActivity;
+import com.courserareplica.model.UserNote;
 import com.courserareplica.service.UserActivityService;
+import com.courserareplica.service.UserNoteService;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.servlet.account.AccountResolver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -29,6 +32,54 @@ public class UserActionController {
 
     @Autowired
     private AccountResolver accountResolver;
+
+    @Autowired
+    private UserNoteService userNoteService;
+
+    @RequestMapping(value = "/userNote/saveUserNote", method = RequestMethod.POST)
+    @ResponseBody
+    public UserNoteResponse saveUserNote(@RequestBody UserNoteRequest userNoteRequest,
+                               ServletRequest request) {
+        UserNoteResponse response = new UserNoteResponse();
+        Account account = accountResolver.getAccount(request);
+
+        UserNote userNote = new UserNote();
+        userNote.setUserId(account.getHref());
+        userNote.setParagraphId(userNoteRequest.getParagraphId());
+        userNote.setNote(userNoteRequest.getNote());
+
+        try {
+            userNoteService.save(userNote);
+            response.setError(false);
+        } catch (Exception e) {
+            response.setError(true);
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value = "/userNote/deleteUserNote", method = RequestMethod.POST)
+    @ResponseBody
+    public UserNoteResponse deleteUserNote(@RequestBody UserNoteRequest userNoteRequest,
+                                         ServletRequest request) {
+        UserNoteResponse response = new UserNoteResponse();
+        Account account = accountResolver.getAccount(request);
+
+        try {
+            List<UserNote> userNotes = userNoteService.findByParagraphIdAndUserId(userNoteRequest.getParagraphId(), account.getHref());
+
+            if (userNotes != null && !userNotes.isEmpty()) {
+                if (userNotes.get(0) != null) {
+                    userNoteService.delete(userNotes.get(0));
+                }
+            }
+            response.setError(false);
+        } catch (Exception e) {
+            response.setError(true);
+        }
+
+        return response;
+    }
 
     @RequestMapping(path = "/completeParagraph", method = RequestMethod.POST)
     @ResponseBody

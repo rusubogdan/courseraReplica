@@ -10,6 +10,7 @@
             <div class="sidebar-nav-fixed affix">
                 <div class="well">
                     <ul class="nav ">
+                        <li class="nav-header" th:text="${course.name}"></li>
                         <li class="nav-header">Capitole</li>
                         <li th:class="active" th:each="chapter : ${course.chapters}">
                             <a th:href="@{/courses/__${course.id}__/ch/__${chapter.id}__}" th:text="${chapter.name}"></a>

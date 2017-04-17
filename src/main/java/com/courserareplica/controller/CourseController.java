@@ -1,13 +1,8 @@
 package com.courserareplica.controller;
 
-import com.courserareplica.model.Chapter;
-import com.courserareplica.model.Course;
-import com.courserareplica.model.Paragraph;
-import com.courserareplica.model.UserActivity;
-import com.courserareplica.service.ChapterService;
-import com.courserareplica.service.CourseService;
-import com.courserareplica.service.ParagraphService;
-import com.courserareplica.service.UserActivityService;
+import com.courserareplica.DTO.UserNoteRequest;
+import com.courserareplica.model.*;
+import com.courserareplica.service.*;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.servlet.account.AccountResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +34,9 @@ public class CourseController {
 
     @Autowired
     private UserActivityService userActivityService;
+
+    @Autowired
+    private UserNoteService userNoteService;
 
     @RequestMapping(value = "/ajax/saveCourse", method = RequestMethod.POST)
     @ResponseBody
@@ -85,6 +83,7 @@ public class CourseController {
     @RequestMapping(value = "/{courseId}")
     public String coursePage(@PathVariable(value = "courseId") Long courseId,
                              @RequestParam(required = false, defaultValue = "0") Long chapter,
+                             ServletRequest request,
                              Model model) {
         Course course = courseService.getCourse(courseId);
 
@@ -95,8 +94,16 @@ public class CourseController {
 
         // get chapters for course
 
+        Account account = AccountResolver.INSTANCE.getAccount(request);
+
+        if (account == null) {
+            return "redirect:/courses";
+        }
 
         model.addAttribute("course", course);
+
+        List<Course> userCourses = userActivityService.getUserCourses(account);
+        model.addAttribute("userCourses", userCourses);
 
         return "course";
     }
@@ -255,10 +262,21 @@ public class CourseController {
             return "redirect:/courses";
         }
 
-        // for each paragraph, set if it was viewed by this user
+        // for each paragraph, set if it was viewed by this user and if it has a note
         for (Paragraph paragraph : chapter.getParagraphs()) {
+            // set activity
             List<UserActivity> activities = userActivityService.findByUserIdAndChapterIdAndParagraphId(account.getHref(), chapter.getId(), paragraph.getId());
             paragraph.setCompleted((activities != null && !activities.isEmpty()));
+
+            // set user notes
+            List<UserNote> userNotes = userNoteService.findByParagraphIdAndUserId(paragraph.getId(), account.getHref());
+            if (userNotes != null && !userNotes.isEmpty()) {
+                UserNote note = userNotes.get(0);
+
+                if (note != null) {
+                    paragraph.setNote(note.getNote());
+                }
+            }
         }
 
         model.addAttribute("course", course);
@@ -269,6 +287,8 @@ public class CourseController {
 
         return "chapterView";
     }
+
+
 
     // todo might be added and the title in the link: id - title, then extract those
     @RequestMapping(value = "/{courseId}/edit")
