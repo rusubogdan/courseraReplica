@@ -19,7 +19,18 @@ $(document).ready(function() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
-                    console.log(response);
+                    if (response.success) {
+                        noty({
+                            text: 'Salvat!',
+                            type: 'success',
+                            animation: {
+                                open: {height: 'toggle'},
+                                close: {height: 'toggle'},
+                                easing: 'swing',
+                                speed: 500 // opening & closing animation speed
+                            }
+                        });
+                    }
                 },
                 fail: function (error) {
                     console.log(error);

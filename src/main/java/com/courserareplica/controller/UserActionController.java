@@ -43,12 +43,25 @@ public class UserActionController {
         UserNoteResponse response = new UserNoteResponse();
         Account account = accountResolver.getAccount(request);
 
-        UserNote userNote = new UserNote();
-        userNote.setUserId(account.getHref());
-        userNote.setParagraphId(userNoteRequest.getParagraphId());
-        userNote.setNote(userNoteRequest.getNote());
+        UserNote userNote;
+
+        // allow one user note per paragraph
+        List<UserNote> userNotes = userNoteService.findByParagraphIdAndUserId(userNoteRequest.getParagraphId(), account.getHref());
+
+        if (userNotes != null && !userNotes.isEmpty()) {
+            // update the note
+            userNote = userNotes.get(0);
+            userNote.setNote(userNoteRequest.getNote());
+        } else {
+            // create new note
+            userNote = new UserNote();
+            userNote.setParagraphId(userNoteRequest.getParagraphId());
+            userNote.setUserId(account.getHref());
+            userNote.setNote(userNoteRequest.getNote());
+        }
 
         try {
+            // save or update
             userNoteService.save(userNote);
             response.setError(false);
         } catch (Exception e) {

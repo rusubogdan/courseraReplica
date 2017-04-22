@@ -127,6 +127,11 @@ public class CourseController {
         }
 
         paragraph.setChapter(chapter);
+
+        List<Paragraph> paragraphs = chapter.getParagraphs();
+        Integer lastPosition = (paragraphs == null || paragraphs.isEmpty()) ? 0 : paragraphs.get(paragraphs.size() - 1).getPosition() + 1;
+        paragraph.setPosition(lastPosition);
+
         paragraphService.save(paragraph);
 
         response.put("success", true);
@@ -211,12 +216,16 @@ public class CourseController {
 
     @RequestMapping(value = "/{courseId}/edit/do", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public String courseEdit(@PathVariable Long courseId,
+    public Map courseEdit(@PathVariable Long courseId,
                              @RequestBody Course course) {
 
+        Map<String, Object> response = new HashMap<>();
         Course courseObj = courseService.getCourse(courseId);
+
         if (courseObj == null) {
-            return "redirect:/courses";
+            response.put("success", false);
+            response.put("errorMessage", "course id is invalid");
+            return response;
         }
 
         // update
@@ -225,6 +234,7 @@ public class CourseController {
             isUpdated = true;
             courseObj.setName(course.getName());
         }
+
         if (!isEmpty(course.getDescription()) && !course.getDescription().equals(courseObj.getDescription())) {
             isUpdated = true;
             courseObj.setDescription(course.getDescription());
@@ -234,7 +244,9 @@ public class CourseController {
             courseService.save(courseObj);
         }
 
-        return "success";
+        response.put("success", true);
+
+        return response;
     }
 
     @RequestMapping(value = "/{courseId}/ch/{chapterId}")
@@ -363,32 +375,33 @@ public class CourseController {
     public Map newChapterDo(@PathVariable Long courseId,
                             @RequestBody Chapter chapter) {
         Course existingCourse = courseService.getCourse(courseId);
-        if (existingCourse == null) {
-            Map map = new HashMap<>();
-            map.put("error", true);
-            map.put("cause", "course doesn't exist");
+        Map<String, Object> result = new HashMap<>();
 
-            return map;
+        if (existingCourse == null) {
+            result.put("error", true);
+            result.put("cause", "course doesn't exist");
+
+            return result;
         }
 
         // if unique course - chapter
         // TODO by name and course.name
 
         if (chapter.getName().equals("")) {
-            Map map = new HashMap<>();
-            map.put("error", true);
-            map.put("cause", "empty chapter name");
+            result.put("error", true);
+            result.put("cause", "empty chapter name");
 
-            return map;
+            return result;
         }
 
         // save this chapter
+        chapter.setPosition(existingCourse.getChapters().size() + 1);
         chapterService.save(chapter);
         chapter.setCourse(existingCourse);
         chapterService.save(chapter);
 
-        Map result = new HashMap<>();
         result.put("result", existingCourse);
+        result.put("success", true);
 
         return result;
     }

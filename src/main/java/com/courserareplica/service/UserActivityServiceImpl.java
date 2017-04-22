@@ -38,21 +38,13 @@ public class UserActivityServiceImpl implements UserActivityService {
             List list = userActivityRepository.findByUserIdAndChapterIdAndParagraphId
                     (userActivity.getUserId(), userActivity.getChapterId(), userActivity.getParagraphId());
             if (list != null && list.isEmpty()) {
+                // save a new activity
                 savedUserActivity = userActivityRepository.save(userActivity);
             }
         } catch (Exception e) {
             log.debug(e.getMessage());
 
             return null;
-        }
-
-        List<UserActivity> chapterParagraphs = userActivityRepository
-                .findByUserIdAndChapterId(userActivity.getUserId(), userActivity.getChapterId());
-
-        Chapter chapter = chapterRepository.findOne(userActivity.getChapterId());
-
-        if (chapter.getParagraphs().size() == chapterParagraphs.size()) {
-
         }
 
         return savedUserActivity;

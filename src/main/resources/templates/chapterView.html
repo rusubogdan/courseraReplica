@@ -21,8 +21,8 @@
 <nav th:replace="fragments/header :: navbar"></nav>
 <div class="container content">
     <div class="row">
-        <div class="col-md-10 course-edit-background">
-            <div class="col-md-3 row">
+        <div class="col-lg-12 course-edit-background">
+            <div class="col-lg-4 row">
                 <div class="affix">
                     <div class="well">
                         <ul class="nav ">
@@ -40,62 +40,62 @@
             </div>
 
             <div class="col-md-7 row">
-                <div class="row">
-                    <div id="course-title" class="course-title" th:text="${course.name}"></div>
+                <div class="row top5">
+                    <div id="course-title" class="course-title">
+                        <a th:href="@{/courses/__${course.id}__}" th:text="${course.name}"></a>
+                    </div>
                     <div id="course-id" hidden="hidden" th:text="${course.id}"></div>
                 </div>
-                <div class="row" th:with="chapterPosition=${chapter.position + 1}">
+                <div class="row top5" th:with="chapterPosition=${chapter.position + 1}">
                     <div id="chapter-title" class="chapter-title"
                          th:text="${chapterPosition + '. ' + chapter.name}"></div>
                     <div id="chapter-id" hidden="hidden" th:text="${chapter.id}"></div>
                 </div>
-                <div class="row">
+                <div class="row top5">
                     <article id="chapter-description" class="col-md-12 chapter-content chapter-description"
                              th:utext="${chapter.description}"></article>
                 </div>
 
-                <div id="new-par-holder" class="row">
+                <div id="new-par-holder" class="row top5">
 
                 </div>
 
-                <div class="row par-holder" th:each="paragraph: ${chapter.paragraphs}">
-                    <div hidden="hidden" class="par-id-holder" th:text="${paragraph.id}"></div>
-                    <div class="paragraph-details">
-                        <!--checked class means it was completed-->
-                        <div th:class="${paragraph.completed ? 'completed-checker checked' : 'completed-checker unchecked'}"></div>
-                    </div>
-
-                    <div class="col-md-12 course-content" th:utext="${paragraph.text}"></div>
-
-                    <div class="par-actions">
+                <div class="row">
+                    <div class="row par-holder" th:each="paragraph: ${chapter.paragraphs}">
                         <div hidden="hidden" class="par-id-holder" th:text="${paragraph.id}"></div>
-                        <div class="par-buttons">
-                            <a href="#" class="edit-href">Editeaza</a>
-                            <a href="#" class="delete-href">Sterge</a>
+                        <div class="paragraph-details">
+                            <!--checked class means it was completed-->
+                            <div th:class="${paragraph.completed ? 'completed-checker checked' : 'completed-checker unchecked'}"></div>
                         </div>
-                        <div class="note-holder">
-                            <div class="tooltip" th:hidden="${paragraph.note == null}">
-                                <span class="hover-text" th:text="${paragraph.note != null} ? ${#strings.substring(paragraph.note, 0, 8) + '...'}"></span>
-                                <span class="tooltiptext" th:text="${paragraph.note}"></span>
+
+                        <div class="col-md-12 course-content" th:utext="${paragraph.text}"></div>
+
+                        <div class="par-actions">
+                            <div hidden="hidden" class="par-id-holder" th:text="${paragraph.id}"></div>
+                            <div class="par-buttons">
+                                <a href="#" class="edit-href">Editeaza</a>
+                                <a href="#" class="delete-href">Sterge</a>
                             </div>
-                            <textarea hidden="hidden" class="textarea-content"></textarea>
-                            <div class="add-note-btn add-note">
-                                <span class="tooltiptext">Adauga/modifica nota</span>
-                            </div>
-                            <div class="delete-note-btn delete-note" th:hidden="${paragraph.note == null}">
-                                <span class="tooltiptext">Sterge nota</span>
+                            <div class="note-holder">
+                                <div class="tooltip" th:hidden="${paragraph.note == null}">
+                                    <span class="hover-text" th:text="${paragraph.note != null} ? ${#strings.substring(paragraph.note, 0, 8) + '...'}"></span>
+                                    <span class="tooltiptext" th:text="${paragraph.note}"></span>
+                                </div>
+                                <textarea hidden="hidden" class="textarea-content"></textarea>
+                                <div class="add-note-btn add-note">
+                                    <span class="tooltiptext">Adauga/modifica nota</span>
+                                </div>
+                                <div class="delete-note-btn delete-note" th:hidden="${paragraph.note == null}">
+                                    <span class="tooltiptext">Sterge nota</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="actions-holder">
                     <div id="no-of-paragraphs" hidden="hidden" th:text="${#lists.size(chapter.paragraphs)}"></div>
-                    <input id="new-paragraph" type="submit" value="Paragraf nou"/>
+                    <input id="new-paragraph" type="submit" class="btn btn-success" value="Paragraf nou"/>
                 </div>
-            </div>
-            <div>
-                <!--<input id="updateCourse" type="submit" value="Salveaza" name="submit" class="btn btn-primary btn-lg sharp" />-->
-                <a th:href="@{/courses/__${course.id}__}" id="backTo" class="btn btn-primary btn-lg sharp">Inapoi la curs</a>
             </div>
         </div>
     </div>
@@ -110,7 +110,8 @@
         </div>
     </div>
 </div>
-<input hidden="hidden" id="save-para-null" type="submit"/>
+<input hidden="hidden" id="save-para-null" type="submit" value="Salveaza paragraf"/>
+<input hidden="hidden" id="cancel-para-null" type="submit" value="Anulare"/>
 <input hidden="hidden" id="save-edit-para-null" type="submit" value="salveaza"/>
 <input hidden="hidden" id="cancel-edit-para-null" type="submit" value="anuleaza"/>
 <input hidden="hidden" id="delete-edit-para-null" type="submit" value="sterge"/>

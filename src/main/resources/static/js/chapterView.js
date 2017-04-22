@@ -4,17 +4,23 @@ $(document).ready(function() {
         'click': function (event) {
             event.preventDefault();
 
+            var addNewParagraph = $(this);
+            addNewParagraph.attr('hidden', 'hidden');
+
             var courseId = $('#course-id').html();
             var chapterId = $('#chapter-id').html();
 
             var newParagraph = $('#add-paragraph-template').clone();
             var noOfParagraphs = $('#no-of-paragraphs').html();
+            noOfParagraphs++;
+
             newParagraph
-                .attr('id', 'paragraph-' + ++noOfParagraphs)
+                .attr('id', 'paragraph-' + noOfParagraphs)
                 .removeAttr('hidden');
 
             var newParHolder = $('#new-par-holder');
             newParHolder.append(newParagraph);
+
             var newParagraphText = newParagraph.find('.new-paragraph-text');
             newParagraphText.summernote({
                 height: 200,
@@ -26,9 +32,16 @@ $(document).ready(function() {
             // at save
 
             var saveBtn = $('#save-para-null').clone();
-            saveBtn.attr('id', 'save-para-' + ++noOfParagraphs);
+            saveBtn.attr('id', 'save-para-' + noOfParagraphs);
+            saveBtn.addClass('btn btn-success');
             saveBtn.removeAttr('hidden');
             newParagraph.append(saveBtn);
+
+            var cancelBtn = $('#cancel-para-null').clone();
+            cancelBtn.attr('id', 'cancel-para-' + noOfParagraphs);
+            cancelBtn.addClass('btn btn-danger');
+            cancelBtn.removeAttr('hidden');
+            newParagraph.append(cancelBtn);
 
             saveBtn.on({
                 'click': function (event) {
@@ -46,16 +59,32 @@ $(document).ready(function() {
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: function (response) {
-                            console.log(response);
 
                             if (response.success) {
                                 location.reload();
                             }
+
+                            addNewParagraph.removeAttr('hidden');
                         },
                         fail: function (error) {
                             console.log(error);
+
+                            newParagraph.remove();
+
+                            addNewParagraph.removeAttr('hidden');
+
                         }
                     });
+                }
+            });
+
+            cancelBtn.on({
+                'click': function (event) {
+                    event.preventDefault();
+
+                    newParagraph.remove();
+
+                    addNewParagraph.removeAttr('hidden');
                 }
             });
         }
@@ -79,7 +108,6 @@ $(document).ready(function() {
                        dataType: 'json',
                        contentType: 'application/json; charset=utf-8',
                        success: function (response) {
-                           console.log(response);
 
                            if (response.success) {
                                location.reload();
@@ -100,6 +128,7 @@ $(document).ready(function() {
                 var deleteBtn = $(event.target);
 
                 var noteHolderDiv = deleteBtn.parents('.note-holder');
+                var paragraphId = deleteBtn.parents('.note-holder').parents('.par-actions').children('.par-id-holder').html();
 
                 noty({
                     text: 'Stergere nota?',
@@ -113,7 +142,7 @@ $(document).ready(function() {
                             text: 'Yes',
                             onClick: function ($noty) {
                                 var requestData = {
-
+                                    paragraphId: paragraphId
                                 };
                                 var deleteSuccess = false;
 
@@ -124,8 +153,6 @@ $(document).ready(function() {
                                     dataType: 'json',
                                     contentType: 'application/json; charset=utf-8',
                                     success: function (response) {
-                                        console.log(response);
-
                                         if (!response.error) {
                                             deleteSuccess = true;
 
@@ -136,6 +163,8 @@ $(document).ready(function() {
                                             noteHolderDiv.children('.textarea-content').val('');
 
                                             noty({text: 'Nota stearsa!', type: 'success', timeout: 1000});
+
+                                            deleteBtn.attr('hidden', 'hidden');
                                         }
                                     },
                                     fail: function (error) {
@@ -149,8 +178,6 @@ $(document).ready(function() {
                                 noteHolderDiv.children('.tooltip').children('.hover-text').html('');
                                 noteHolderDiv.children('.tooltip').children('.tooltiptext').html('');
                                 noteHolderDiv.children('.textarea-content').val('');
-
-                                noty({text: 'Nota stearsa!', type: 'success', timeout: 1000});
                             }
                         },
                         {
@@ -178,14 +205,18 @@ $(document).ready(function() {
                targetDiv.attr('hidden', 'hidden');
 
                // hide delete note element
-               targetDiv.parents('.note-holder').children('.delete-note-btn').attr('hidden', 'hidden');
+               var deleteNoteBtn = targetDiv.parents('.note-holder').children('.delete-note-btn');
+               deleteNoteBtn.attr('hidden', 'hidden');
 
                var saveBtn = $('#save-edit-para-null').clone();
                saveBtn.attr('id', 'save-edit-para-some')
                    .removeAttr('hidden');
+               saveBtn.addClass('btn btn-success');
+
                var cancelBtn = $('#cancel-edit-para-null').clone();
                cancelBtn.attr('id', 'cancel-edit-para-some')
                    .removeAttr('hidden');
+               cancelBtn.addClass('btn btn-danger');
 
                targetDiv.after(saveBtn)
                         .after(cancelBtn);
@@ -194,6 +225,10 @@ $(document).ready(function() {
                var textarea = targetDiv.parents('.note-holder').children('.textarea-content');
                textarea.removeAttr('hidden')
                        .attr('contenteditable', 'true');
+
+               var spanHoverText = textarea.parents('.note-holder').children('.tooltip').children('.hover-text');
+               var spanHoverTextExtended = textarea.parents('.note-holder').children('.tooltip').children('.tooltiptext');
+               textarea.text(spanHoverTextExtended.text());
 
                saveBtn.on({
                     'click': function (event) {
@@ -216,7 +251,6 @@ $(document).ready(function() {
                         }
 
                         // hide delete note button
-                        var deleteNoteBtn = textarea.parents('.note-holder').children('.delete-note-btn.delete-note');
                         deleteNoteBtn.attr('hidden', 'hidden');
 
                         var paragraphHolder = targetDiv.parents('.row.par-holder').children('.par-id-holder');
@@ -234,11 +268,11 @@ $(document).ready(function() {
                             dataType: 'json',
                             contentType: 'application/json; charset=utf-8',
                             success: function (response) {
-                                console.log(response);
-
                                 if (!response.error) {
                                     saveSuccess = true;
-                                    var spanHoverText = textarea.parents('.note-holder').children('.tooltip').children('.hover-text');
+
+                                    noty({text: 'Nota adaugata', type: 'success', timeout: 1000});
+
                                     spanHoverText.html(content.substring(0, 8) + '...');
 
                                     var spanContent = textarea.parents('.note-holder').children('.tooltip').children('.tooltiptext');
@@ -261,9 +295,6 @@ $(document).ready(function() {
 
                         // show the add note image
                         targetDiv.removeAttr('hidden');
-
-
-
                     }
                });
 
@@ -278,8 +309,11 @@ $(document).ready(function() {
                        // show the add note image
                        targetDiv.removeAttr('hidden');
 
-                       // hide delete note element
-                       targetDiv.parents('.note-holder').children('.delete-note-btn').removeAttr('hidden');
+                       // show delete note - only if it has a note to delete
+                       if (spanHoverText.html() != "") {
+                           deleteNoteBtn.removeAttr('hidden');
+                       }
+
                    }
                });
            }
@@ -295,9 +329,12 @@ $(document).ready(function() {
                 var saveBtn = $('#save-edit-para-null').clone();
                 saveBtn.attr('id', 'save-edit-para-some')
                     .removeAttr('hidden');
+                saveBtn.addClass('btn btn-success');
+
                 var cancelBtn = $('#cancel-edit-para-null').clone();
                 cancelBtn.attr('id', 'cancel-edit-para-some')
                     .removeAttr('hidden');
+                cancelBtn.addClass('btn btn-danger');
 
                 a.after(saveBtn)
                     .after(cancelBtn);
@@ -314,7 +351,7 @@ $(document).ready(function() {
                         var paragraphId = saveBtn.parents('.row.par-holder').children('.par-id-holder').html();
                         var paragraphText = saveBtn.parents('.row.par-holder').children('.col-md-12.course-content')
                             .summernote('code');
-                        console.log(paragraphId + ' ' + paragraphText);
+
                         $.ajax({
                             type: 'POST',
                             url: '/courses/'+ courseId + '/ch/' + chapterId + '/par/' + paragraphId + '/edit',
@@ -322,7 +359,6 @@ $(document).ready(function() {
                             dataType: 'json',
                             contentType: 'application/json; charset=utf-8',
                             success: function (response) {
-                                console.log(response);
 
                                 if (response.success) {
                                     location.reload();
@@ -363,11 +399,10 @@ $(document).ready(function() {
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
-                console.log(response);
-
                 par.removeClass('unchecked')
                     .addClass('checked');
 
+                noty({text: 'Paragraf citit', type: 'success', timeout: 1000});
             },
             fail: function (error) {
                 console.log(error);

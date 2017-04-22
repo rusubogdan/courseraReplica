@@ -21,16 +21,16 @@
 <body>
 <nav th:replace="fragments/header :: navbar"></nav>
 
-<div class="container">
-    <div class="row">
-        <h2>Left side Navigation bar (Fixed)</h2>
+<!--<div class="container">-->
+    <!--<div class="row">-->
+        <!--<h2>Left side Navigation bar (Fixed)</h2>-->
 
-        <p>Left side Navigation</p>
-    </div>
-</div>
+        <!--<p>Left side Navigation</p>-->
+    <!--</div>-->
+<!--</div>-->
 <div class="container content">
     <div class="row">
-        <div class="col-md-10 course-edit-background">
+        <div class="col-lg-12 course-edit-background">
             <div class="row">
                 <div id="courseTitle" class="courseTitle new-chapter" th:text="${course.name}"></div>
                 <div id="courseId" hidden="hidden" th:text="${course.id}"></div>
@@ -64,8 +64,8 @@
                     <textarea id="chapter-title-0" placeholder="Insert new title" style="width: 760px;"></textarea>
                     <article id="chapter-description-0" class="col-md-12 course-content course-description"></article>
                     <div class="new-chapter-actions-edit">
-                        <input id="new-chapter-save" type="submit" class="btn btn-primary btn-lg sharp" value="Salveaza" />
-                        <input id="new-chapter-cancel" type="submit" class="btn btn-primary btn-lg sharp" value="Anuleaza" />
+                        <input id="new-chapter-save" type="submit" class="btn btn-success btn-lg sharp" value="Salveaza" />
+                        <input id="new-chapter-cancel" type="submit" class="btn btn-warning btn-lg sharp" value="Anuleaza" />
                     </div>
                 </div>
             </div>

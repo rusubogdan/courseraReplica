@@ -17,6 +17,7 @@
     <script th:src="@{/js/summernote.min.js}" type="application/javascript"></script>
     <script th:src="@{/js/common.js}" type="application/javascript"></script>
     <script th:src="@{/js/slick.min.js}" type="application/javascript"></script>
+    <script th:src="@{/js/jquery.noty.packaged.min.js}" type="application/javascript"></script>
 
     <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
 
@@ -26,7 +27,7 @@
 <nav th:replace="fragments/header :: navbar"></nav>
 <div class="container content">
     <div class="row">
-        <div class="col-md-10 course-edit-background">
+        <div class="col-lg-12 course-edit-background">
             <div class="row">
                 <div id="course-title" class="course-title" th:text="${course.name}"></div>
                 <div id="course-id" hidden="hidden" th:text="${course.id}"></div>

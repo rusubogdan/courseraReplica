@@ -25,7 +25,7 @@ $(document).ready(function() {
             var chapter = {
                 name: $('#chapter-title-0').val(),
                 description: $('#chapter-description-0').summernote('code'),
-                position: noOfChapters
+                position: noOfChapters + 1
             };
 
             if (chapter.name.trim() == '') {
@@ -49,22 +49,35 @@ $(document).ready(function() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
-                    console.log(response);
-                    var n = noty({
-                        text: 'Saved!',
-                        animation: {
-                            open: {height: 'toggle'},
-                            close: {height: 'toggle'},
-                            easing: 'swing',
-                            speed: 500 // opening & closing animation speed
-                        }
-                    });
+                    if (response.success) {
+                        noty({
+                            text: 'Salvat!',
+                            type: 'success',
+                            animation: {
+                                open: {height: 'toggle'},
+                                close: {height: 'toggle'},
+                                easing: 'swing',
+                                speed: 500 // opening & closing animation speed
+                            }
+                        });
+                    } else if (response.error) {
+                        noty({
+                            text: 'Eroare!',
+                            type: 'error',
+                            animation: {
+                                open: {height: 'toggle'},
+                                close: {height: 'toggle'},
+                                easing: 'swing',
+                                speed: 500 // opening & closing animation speed
+                            }
+                        })
+                    }
 
                 },
                 fail: function (error) {
-                    console.log(error);
                     noty({
-                        text: 'Error!',
+                        text: 'Eroare!',
+                        type: 'error',
                         animation: {
                             open: {height: 'toggle'},
                             close: {height: 'toggle'},

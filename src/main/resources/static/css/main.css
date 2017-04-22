@@ -251,10 +251,13 @@ body {
 
 /*---course-content---*/
 .course-content {
-	background: #fff;
-	border-radius:0px; box-shadow:0 0 0 1px rgba(83,83,88,.1);
+	background: #eae9da;
+	border-radius:0; box-shadow:0 0 0 1px rgba(83,83,88,.1);
 	margin-bottom:20px;
 	color: black;
+    margin-top: 5%;
+    padding-top: 3%;
+    padding-left: 5%;
 }
 
 .course-menu {
@@ -296,7 +299,7 @@ textarea.courseTitle {
 }
 
 .course-edit-background {
-    width: 80%;
+    /*width: 80%;*/
 }
 
 /* END ********** edit course ********** */
@@ -360,6 +363,24 @@ div.courseTitle.new-chapter {
     font-size: 25px;
 }
 
+.chapter-description {
+    background: #dbdbdb;
+    border-radius: 10px;
+}
+
+.top5 {
+    margin-top: 5%;
+}
+
+.top2 {
+    margin-top: 2%;
+}
+
+.title-left {
+    font-size: large;
+    margin-left: -15px;
+}
+
 .row .chapter-description p {
     font-size: 15px;
     margin-top: 3%;
@@ -369,7 +390,7 @@ div.courseTitle.new-chapter {
 .row.par-holder {
     margin-left: 2%;
     margin-bottom: 5%;
-    background-color: #d7d7d7;
+    background-color: #f4f4eb;
 }
 
 .row.par-holder .col-md-12.course-content {
@@ -407,7 +428,7 @@ div.courseTitle.new-chapter {
 
 @media (min-width: 1200px) {
     .container {
-        width: 1800px;
+        /*width: 1800px;*/
     }
 }
 
