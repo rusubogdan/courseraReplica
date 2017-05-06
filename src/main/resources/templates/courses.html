@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/header :: dependencies">
 </head>
 <body>
@@ -18,8 +18,8 @@
         </div>
     </div>
 
-    <div>
-        <a th:href="@{/courses/addCourse}" class="btn btn-primary btn-lg sharp">Add new course</a>
+    <div sec:authorize="hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')">
+        <a th:href="@{/courses/addCourse}" class="btn btn-primary btn-lg sharp">Adauga curs</a>
     </div>
 
 </div>

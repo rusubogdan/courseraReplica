@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="/webjars/fontawesome/4.7.0/css/font-awesome.min.css" type="text/css" />
@@ -70,17 +70,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 course-menu">
-            <div class="row menu-heading" th:text="${course.name}"></div>
-            <div class="row">
-                <div class="col-lg-2"><i class="fa fa-check" aria-hidden="true"></i></div>
-                <div class="col-lg-10">Sectiune 1</div>
-            </div>
-            <div class="row">
-                <div class="col-xs-2"></div>
-                <div class="col-xs-10">Sectiune 2</div>
-            </div>
-        </div>
+        <!--<div class="col-md-2 course-menu">-->
+            <!--<div class="row menu-heading" th:text="${course.name}"></div>-->
+            <!--<div class="row">-->
+                <!--<div class="col-lg-2"><i class="fa fa-check" aria-hidden="true"></i></div>-->
+                <!--<div class="col-lg-10">Sectiune 1</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="col-xs-2"></div>-->
+                <!--<div class="col-xs-10">Sectiune 2</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
     <div>
         <!--<input id="updateCourse" type="submit" value="Salveaza" name="submit" class="btn btn-primary btn-lg sharp" />-->

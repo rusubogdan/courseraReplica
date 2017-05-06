@@ -109,6 +109,14 @@ public class UserActivityServiceImpl implements UserActivityService {
             log.error(e.getMessage());
         }
 
+        if (courses.isEmpty()) {
+            Course mockCourse = new Course();
+            mockCourse.setName("Nici un curs");
+            mockCourse.setPercentage(0);
+
+            courses.add(mockCourse);
+        }
+
         return courses;
     }
 }

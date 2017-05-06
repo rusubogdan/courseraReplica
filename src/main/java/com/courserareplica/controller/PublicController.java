@@ -11,11 +11,11 @@ public class PublicController {
 
     @RequestMapping("/public")
     public String publicPage() {
-        return "public";
+        return "redirect:/home";
     }
 
     @RequestMapping("/")
     public String firstPage() {
-        return "public";
+        return "redirect:/home";
     }
 }

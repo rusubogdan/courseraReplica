@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css"/>
     <link rel="stylesheet" href="/webjars/fontawesome/4.7.0/css/font-awesome.min.css" type="text/css"/>
@@ -72,7 +72,7 @@
 
                         <div class="par-actions">
                             <div hidden="hidden" class="par-id-holder" th:text="${paragraph.id}"></div>
-                            <div class="par-buttons">
+                            <div class="par-buttons" sec:authorize="hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')">
                                 <a href="#" class="edit-href">Editeaza</a>
                                 <a href="#" class="delete-href">Sterge</a>
                             </div>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="actions-holder">
                     <div id="no-of-paragraphs" hidden="hidden" th:text="${#lists.size(chapter.paragraphs)}"></div>
-                    <input id="new-paragraph" type="submit" class="btn btn-success" value="Paragraf nou"/>
+                    <input sec:authorize="hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')" id="new-paragraph" type="submit" class="btn btn-success" value="Paragraf nou"/>
                 </div>
             </div>
         </div>

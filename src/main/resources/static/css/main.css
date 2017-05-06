@@ -251,8 +251,8 @@ body {
 
 /*---course-content---*/
 .course-content {
-	background: #eae9da;
-	border-radius:0; box-shadow:0 0 0 1px rgba(83,83,88,.1);
+	background: #f6f9ff;
+	border-radius:0; box-shadow:1px 1px 0 5px rgba(83,83,88,.1);
 	margin-bottom:20px;
 	color: black;
     margin-top: 5%;
@@ -389,8 +389,9 @@ div.courseTitle.new-chapter {
 
 .row.par-holder {
     margin-left: 2%;
+    border-radius: 10px;
     margin-bottom: 5%;
-    background-color: #f4f4eb;
+    background-color: #f9fbff;
 }
 
 .row.par-holder .col-md-12.course-content {

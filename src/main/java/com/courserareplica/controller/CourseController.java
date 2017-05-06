@@ -1,12 +1,12 @@
 package com.courserareplica.controller;
 
-import com.courserareplica.DTO.UserNoteRequest;
 import com.courserareplica.model.*;
 import com.courserareplica.service.*;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.servlet.account.AccountResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +38,21 @@ public class CourseController {
     @Autowired
     private UserNoteService userNoteService;
 
+    @RequestMapping
+    public String courses(Model model, ServletRequest request) {
+        List<Course> courses = courseService.getAllCourses();
+        model.addAttribute("courses", courses);
+
+        Account account = AccountResolver.INSTANCE.getAccount(request);
+
+        List<Course> userCourses = userActivityService.getUserCourses(account);
+        model.addAttribute("userCourses", userCourses);
+
+        return "courses";
+    }
+
     @RequestMapping(value = "/ajax/saveCourse", method = RequestMethod.POST)
+    @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
     @ResponseBody
     public String saveCourse(
             @RequestParam(value = "courseTitle") String courseTitle,
@@ -110,6 +124,7 @@ public class CourseController {
 
     @RequestMapping(value = "/{courseId}/ch/{chapterId}/newParagraph", method = RequestMethod.POST)
     @ResponseBody
+    @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
     public Map addNewChapter(@PathVariable Long courseId,
                              @PathVariable Long chapterId,
                              @RequestBody Paragraph paragraph) {
@@ -140,6 +155,7 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/{courseId}/ch/{chapterId}/slideshow")
+    @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
     public String slideshowChapter(@PathVariable Long courseId,
                                    @PathVariable Long chapterId,
                                    Model model) {
@@ -152,6 +168,7 @@ public class CourseController {
 
     @RequestMapping(value = "/{courseId}/ch/{chapterId}/par/{paragraphId}/edit", method = RequestMethod.POST)
     @ResponseBody
+    @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
     public Map editParagraph(@PathVariable Long courseId,
                              @PathVariable Long chapterId,
                              @PathVariable Long paragraphId,
@@ -185,6 +202,7 @@ public class CourseController {
 
     @RequestMapping(value = "/{courseId}/ch/{chapterId}/par/{paragraphId}/delete", method = RequestMethod.POST)
     @ResponseBody
+    @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
     public Map deleteParagraph(@PathVariable Long courseId,
                                @PathVariable Long chapterId,
                                @PathVariable Long paragraphId) {
@@ -216,8 +234,9 @@ public class CourseController {
 
     @RequestMapping(value = "/{courseId}/edit/do", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
     public Map courseEdit(@PathVariable Long courseId,
-                             @RequestBody Course course) {
+                          @RequestBody Course course) {
 
         Map<String, Object> response = new HashMap<>();
         Course courseObj = courseService.getCourse(courseId);
@@ -301,9 +320,9 @@ public class CourseController {
     }
 
 
-
     // todo might be added and the title in the link: id - title, then extract those
     @RequestMapping(value = "/{courseId}/edit")
+    @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
     public String courseEditPage(@PathVariable(value = "courseId") Long courseId,
                                  @RequestParam(required = false, defaultValue = "0") Long chapter,
                                  Model model) {
@@ -321,42 +340,20 @@ public class CourseController {
         return "courseEdit";
     }
 
-    @RequestMapping
-    public String courses(Model model) {
-        List<Course> courses = courseService.getAllCourses();
-        model.addAttribute("courses", courses);
-
-        return "courses";
-    }
-
-
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String createCourse() {
-
-        return "courses";
-    }
-
-    @RequestMapping(value = "/course", method = RequestMethod.GET)
-    public String viewCourse(Model model) {
-        model.addAttribute("activeNavButton", "course");
-        model.addAttribute("course.title", "Cursul exemplu");
-        model.addAttribute("course.author", "Autor");
-        return "course";
-    }
-
     @RequestMapping(value = "/addCourse", method = RequestMethod.GET)
-    public String test() {
+    @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
+    public String addCourse(ServletRequest request, Model model) {
+
+        Account account = AccountResolver.INSTANCE.getAccount(request);
+
+        List<Course> userCourses = userActivityService.getUserCourses(account);
+        model.addAttribute("userCourses", userCourses);
 
         return "addCourse";
     }
 
-    @RequestMapping(value = "/testit", method = RequestMethod.POST)
-    public String testCourse(@RequestParam String body, Model model) {
-        model.addAttribute("success", true);
 
-        return "courses";
-    }
-
+    @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
     @RequestMapping(value = "/{courseId}/ch/newChapter", method = RequestMethod.GET)
     public String addNewChapter(@PathVariable Long courseId,
                                 Model model) {
@@ -372,6 +369,7 @@ public class CourseController {
 
     @RequestMapping(value = "/{courseId}/ch/newChapter/do", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
+    @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
     public Map newChapterDo(@PathVariable Long courseId,
                             @RequestBody Chapter chapter) {
         Course existingCourse = courseService.getCourse(courseId);

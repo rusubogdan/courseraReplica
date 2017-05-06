@@ -112,8 +112,6 @@ public class UserActionController {
 
         userActivityService.save(userActivity);
 
-        List<UserActivity> userActivities = userActivityService.findAll();
-
         return new CompleteParagraphResponse(true, null);
     }
 }

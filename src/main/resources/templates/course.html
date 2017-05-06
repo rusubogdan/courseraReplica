@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/header :: dependencies">
 </head>
 <body>
@@ -38,7 +38,7 @@
                     <!--<p th:utext="${chapter.description}"></p>-->
                 <!--</div>-->
             <!--</div>-->
-            <div class="row">
+            <div class="row" sec:authorize="hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')">
                 <div>
                     <a th:href="@{/courses/__${course.id}__/edit}" class="btn btn-primary btn-lg sharp">Editeaza descrierea</a>
                     <a th:href="@{/courses/__${course.id}__/ch/newChapter}" class="btn btn-success btn-lg sharp">Adauga capitol</a>
