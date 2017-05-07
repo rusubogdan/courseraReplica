@@ -552,3 +552,16 @@ div.courseTitle.new-chapter {
 .hover-text {
     margin-right: 20px;
 }
+
+.edit-title-desc {
+    margin-top: 2%;
+}
+
+.add-course {
+    float: right;
+}
+
+.my-courses {
+    font-size: 28px;
+    font-weight: bold;
+}

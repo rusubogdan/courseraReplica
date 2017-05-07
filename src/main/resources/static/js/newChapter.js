@@ -94,7 +94,8 @@ $(document).ready(function() {
         'click': function (event) {
             event.preventDefault();
 
-            console.log("cancel");
+            window.location.href = '/courses/' + course.id;
+
         }
     });
 });

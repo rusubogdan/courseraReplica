@@ -96,8 +96,6 @@ $(document).ready(function() {
                var a = $(event.target);
 
                if(confirm("Vrei sa stergi paragraful?")) {
-                   console.log("da");
-
                    var courseId = $('#course-id').html();
                    var chapterId = $('#chapter-id').html();
                    var paragraphId = a.parents('.row.par-holder').children('.par-id-holder').html();
@@ -320,11 +318,90 @@ $(document).ready(function() {
        });
     });
 
+    $('.chapter-title-edit.chapter-desc-edit .edit-title-desc').on({
+        'click': function (event) {
+            var editBtn = $(event.target);
+            editBtn.attr('hidden', 'hidden');
+
+            var titleDiv = $('#chapter-title').attr('contenteditable', 'true');
+            var descriptionP = $('#chapter-description').attr('contenteditable', 'true');
+
+            var doneBtn = editBtn.siblings('.edit-title-desc-done');
+            doneBtn.removeAttr('hidden');
+            var cancelBtn = editBtn.siblings('.edit-title-desc-cancel');
+            cancelBtn.removeAttr('hidden');
+
+            cancelBtn.on({
+                'click': function (event) {
+                    titleDiv.attr('contenteditable', 'false');
+                    descriptionP.attr('contenteditable', 'false');
+
+                    editBtn.removeAttr('hidden');
+
+                    doneBtn.attr('hidden', 'hidden');
+                    cancelBtn.attr('hidden', 'hidden');
+                }
+            });
+
+            doneBtn.on({
+                'click': function (event) {
+                    var courseId = $('#course-id').html();
+                    var chapterId = $('#chapter-id').html();
+
+                    var titleData = '';
+
+                    try {
+                        titleData = titleDiv.html().split('.')[titleDiv.html().split('.').length - 1];
+                    } catch(exp) {
+
+                    }
+
+                    var data = {
+                        title: titleData,
+                        description: descriptionP.html()
+                    };
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/courses/'+ courseId + '/ch/' + chapterId + '/editTitleAndDesc',
+                        data: JSON.stringify(data),
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+
+                            if (response.success) {
+                                noty({text: 'Editare cu success', type: 'success', timeout: 1000});
+
+                                titleDiv.attr('contenteditable', 'false');
+                                descriptionP.attr('contenteditable', 'false');
+
+                                editBtn.removeAttr('hidden');
+
+                                doneBtn.attr('hidden', 'hidden');
+                                cancelBtn.attr('hidden', 'hidden');
+                            }
+                        },
+                        fail: function (error) {
+                            console.log(error);
+                        }
+                    });
+
+
+                }
+            });
+
+        }
+    });
+
     $('.edit-href').each(function (index) {
         $(this).on({
             'click': function (event) {
                 var a = $(event.target);
                 a.attr('hidden', 'hidden');
+
+                // hide delete button
+                var deleteHref = a.siblings('.delete-href');
+                deleteHref.attr('hidden', 'hidden');
 
                 var saveBtn = $('#save-edit-para-null').clone();
                 saveBtn.attr('id', 'save-edit-para-some')
@@ -339,7 +416,25 @@ $(document).ready(function() {
                 a.after(saveBtn)
                     .after(cancelBtn);
 
-                saveBtn.parents('.row.par-holder').children('.col-md-12.course-content').summernote();
+                var content = saveBtn.parents('.row.par-holder').children('.col-md-12.course-content');
+
+                setTimeout(function(){
+                    content.focus();
+                }, 5);
+
+                content.summernote('focus'); // not working
+
+                setTimeout(function() {
+                    content.parents('.par-holder').children('.paragraph-details').find('.completed-checker').focus();
+                }, 100);
+
+                setTimeout(function () {
+                    content.parents('.par-holder').children('.paragraph-details').find('.completed-checker')[0].focus();
+                }, 100);
+
+                setTimeout(function () {
+                    content.parents('.par-holder').children('.paragraph-details').find('.completed-checker').trigger('focus');
+                }, 100);
 
                 saveBtn.on({
                     'click': function (event) {
@@ -361,7 +456,13 @@ $(document).ready(function() {
                             success: function (response) {
 
                                 if (response.success) {
-                                    location.reload();
+                                    content.summernote('destroy');
+
+                                    a.removeAttr('hidden', 'hidden');
+                                    deleteHref.removeAttr('hidden', 'hidden');
+
+                                    saveBtn.remove();
+                                    cancelBtn.remove();
                                 }
                             },
                             fail: function (error) {
@@ -369,7 +470,19 @@ $(document).ready(function() {
                             }
                         });
                     }
-                })
+                });
+
+                cancelBtn.on({
+                    'click': function (event) {
+                        content.summernote('destroy');
+
+                        a.removeAttr('hidden', 'hidden');
+                        deleteHref.removeAttr('hidden', 'hidden');
+
+                        saveBtn.remove();
+                        cancelBtn.remove();
+                    }
+                });
             }
         });
     });

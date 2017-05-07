@@ -10,6 +10,15 @@
     		Cours.ro<br/>site de management cursuri
 		</div>
 	</div>
+    <div th:if="${not #strings.listIsEmpty(userCourses)}" class="my-courses">
+        Cursurile mele
+    </div>
+    <div class="row col-md-12">
+        <div th:each="course : ${userCourses}" class="col-md-6 panel panel-info">
+            <h2 th:text="${course.name}"></h2>
+            <a th:if="${not (course.name == 'Nici un curs')}" class="btn btn-success" th:href="@{/courses/__${course.id}__}">Deschide</a>
+        </div>
+    </div>
 </div>
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>

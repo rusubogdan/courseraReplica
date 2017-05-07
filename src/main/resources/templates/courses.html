@@ -11,7 +11,7 @@
         <div class="col-md-4 left-side">
         	<h2 th:text="${course.name}"></h2>
         	<br />
-        	<a class="btn btn-warning" th:href="@{/courses/__${course.id}__}">Deschide</a>
+        	<a class="btn btn-success" th:href="@{/courses/__${course.id}__}">Deschide</a>
         </div>
         <div class="col-md-8 right-side">
             <div class="course-description" th:utext="${course.description}" ></div>

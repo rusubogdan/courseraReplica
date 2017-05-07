@@ -26,11 +26,12 @@
                 <div class="affix">
                     <div class="well">
                         <ul class="nav ">
-                            <li class="nav-header" th:text="${course.name}"></li>
-                            <li class="nav-header">Capitole</li>
+                            <li class="nav-header">
+                                <a class="title-left" th:href="@{/courses/__${course.id}__}" th:text="${course.name}"></a>
+                            </li>
+                            <li class="nav-header">Capitole:</li>
                             <li th:class="active" th:each="chapter : ${course.chapters}">
-                                <a th:href="@{/courses/__${course.id}__/ch/__${chapter.id}__}"
-                                   th:text="${chapter.name}"></a>
+                                <a th:href="@{/courses/__${course.id}__/ch/__${chapter.id}__}" th:text="${chapter.name}"></a>
                             </li>
                         </ul>
                     </div>
@@ -54,6 +55,16 @@
                 <div class="row top5">
                     <article id="chapter-description" class="col-md-12 chapter-content chapter-description"
                              th:utext="${chapter.description}"></article>
+                </div>
+
+                <div sec:authorize="hasAuthority('https://api.stormpath.com/.couv1/groups/46mjLnyZ3isSurwQIPKBng')"
+                        class="chapter-title-edit chapter-desc-edit">
+                    <div>
+                        <input class="edit-title-desc btn-success" type="button" value="Editeaza" name="Editeaza"/>
+
+                        <input class="edit-title-desc-done btn-success" hidden="hidden" type="button" value="Salveaza" name="Salveaza"/>
+                        <input class="edit-title-desc-cancel btn-error" hidden="hidden" type="button" value="Anuleaza" name="Anuleaza"/>
+                    </div>
                 </div>
 
                 <div id="new-par-holder" class="row top5">

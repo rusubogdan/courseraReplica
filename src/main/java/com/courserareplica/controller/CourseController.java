@@ -1,5 +1,6 @@
 package com.courserareplica.controller;
 
+import com.courserareplica.DTO.EditTitleParams;
 import com.courserareplica.model.*;
 import com.courserareplica.service.*;
 import com.stormpath.sdk.account.Account;
@@ -356,16 +357,65 @@ public class CourseController {
     @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
     @RequestMapping(value = "/{courseId}/ch/newChapter", method = RequestMethod.GET)
     public String addNewChapter(@PathVariable Long courseId,
-                                Model model) {
+                                Model model, ServletRequest request) {
+
+        Account account = AccountResolver.INSTANCE.getAccount(request);
+
+        List<Course> userCourses = userActivityService.getUserCourses(account);
+        model.addAttribute("userCourses", userCourses);
+
         Course course = courseService.getCourse(courseId);
+
         if (course == null) {
             model.addAttribute("error", "Course doesn't exist");
+
             return "redirect:/courses";
         }
+
         model.addAttribute("course", course);
 
         return "courseNewChapter";
     }
+
+    @RequestMapping(value = "/{courseId}/ch/{chapterId}/editTitleAndDesc", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
+    public Map editChapterTitleDescr(@PathVariable Long courseId,
+                                     @PathVariable Long chapterId,
+                                     @RequestBody EditTitleParams editTitleParams) {
+        Map<String, Object> response = new HashMap<>();
+
+        Course course = courseService.getCourse(courseId);
+
+        if (course == null) {
+            response.put("success", false);
+
+            return response;
+        }
+
+        Chapter chapter = chapterService.findBy(chapterId);
+
+        if (chapter == null) {
+            response.put("success", false);
+
+            return response;
+        }
+
+        if (editTitleParams.getTitle().length() >= 5) {
+            chapter.setName(editTitleParams.getTitle());
+        }
+
+        if (editTitleParams.getDescription().length() >= 5) {
+            chapter.setDescription(editTitleParams.getDescription());
+        }
+
+        chapterService.save(chapter);
+
+        response.put("success", true);
+
+        return response;
+    }
+
 
     @RequestMapping(value = "/{courseId}/ch/newChapter/do", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody

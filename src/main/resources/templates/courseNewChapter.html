@@ -53,7 +53,7 @@
                     <th:block data-th-each="chapter : ${course.chapters}">
                         <h3 th:text="${chapter.name}"></h3>
                         <div>
-                            <p th:utext="${course.description}"></p>
+                            <p th:utext="${chapter.description}"></p>
                         </div>
                     </th:block>
                 </div>
@@ -82,7 +82,7 @@
             <!--</div>-->
         <!--</div>-->
     </div>
-    <div>
+    <div class="add-course">
         <!--<input id="updateCourse" type="submit" value="Salveaza" name="submit" class="btn btn-primary btn-lg sharp" />-->
         <a th:href="@{/courses/__${course.id}__}" class="btn btn-primary btn-lg sharp">Finalizare</a>
     </div>

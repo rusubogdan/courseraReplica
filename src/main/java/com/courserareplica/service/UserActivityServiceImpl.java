@@ -101,7 +101,12 @@ public class UserActivityServiceImpl implements UserActivityService {
                 List<UserActivity> userActivities = userActivityRepository.findByUserIdAndCourseId(account.getHref(), courseId);
                 int noOfUserParagraphs = (userActivities != null && !userActivities.isEmpty()) ? userActivities.size() : 0;
 
-                course.setPercentage(new Double(Math.floor((((float) noOfUserParagraphs / noOfTotalParagraphs) * 100))).intValue());
+                int percentage = new Double(Math.floor((((float) noOfUserParagraphs / noOfTotalParagraphs) * 100))).intValue();
+                if (percentage >= 100) {
+                    percentage = 100;
+                }
+
+                course.setPercentage(percentage);
 
                 courses.add(course);
             }
