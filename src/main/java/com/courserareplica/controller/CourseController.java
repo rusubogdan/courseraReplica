@@ -52,6 +52,16 @@ public class CourseController {
         return "courses";
     }
 
+    @RequestMapping(value = "/myCourses", method = RequestMethod.GET)
+    public String myCourses(ServletRequest request, Model model) {
+        Account account = AccountResolver.INSTANCE.getAccount(request);
+
+        List<Course> userCourses = userActivityService.getUserCoursesWithPercentages(account);
+        model.addAttribute("userCourses", userCourses);
+
+        return "myCourses";
+    }
+
     @RequestMapping(value = "/ajax/saveCourse", method = RequestMethod.POST)
     @PreAuthorize("hasAuthority('https://api.stormpath.com/v1/groups/46mjLnyZ3isSurwQIPKBng')")
     @ResponseBody

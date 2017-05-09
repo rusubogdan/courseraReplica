@@ -565,3 +565,12 @@ div.courseTitle.new-chapter {
     font-size: 28px;
     font-weight: bold;
 }
+
+.affix {
+    max-width: 300px;
+}
+
+.my-courses-page .panel {
+    -webkit-box-shadow: 0 0 0;
+    box-shadow: 0 0 0;
+}

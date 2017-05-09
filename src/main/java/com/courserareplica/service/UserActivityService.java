@@ -20,5 +20,5 @@ public interface UserActivityService {
 
     List<Course> getUserCourses(Account account);
 
-
+    List<Course> getUserCoursesWithPercentages(Account account);
 }

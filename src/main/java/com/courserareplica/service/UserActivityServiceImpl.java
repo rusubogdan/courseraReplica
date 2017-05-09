@@ -71,7 +71,7 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public List<Course> getUserCourses(Account account) {
+    public List<Course> getUserCoursesWithPercentages(Account account) {
         // use the Stormpath's account href for user id
         List<Course> courses = new ArrayList<>();
 
@@ -124,4 +124,69 @@ public class UserActivityServiceImpl implements UserActivityService {
 
         return courses;
     }
+
+    @Override
+    public List<Course> getUserCourses(Account account) {
+        // use the Stormpath's account href for user id
+        List<Course> courses = new ArrayList<>();
+
+        try {
+            List<UserActivity> activities = userActivityRepository.findByUserId(account.getHref());
+
+            // stream -> courseId
+            // set to remove duplicates
+            Set<Long> courseIds = activities.stream()
+                    .map(UserActivity::getCourseId)
+                    .collect(Collectors.toSet());
+
+            for (Long courseId : courseIds) {
+                Course course = courseRepository.findOne(courseId);
+                courses.add(course);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        if (courses.isEmpty()) {
+            Course mockCourse = new Course();
+            mockCourse.setName("Nici un curs");
+            mockCourse.setPercentage(0);
+
+            courses.add(mockCourse);
+        }
+
+        return courses;
+    }
 }
+
+/*
+// use the Stormpath's account href for user id
+        List<Course> courses = new ArrayList<>();
+
+        try {
+            List<UserActivity> activities = userActivityRepository.findByUserId(account.getHref());
+
+            // stream -> courseId
+            // set to remove duplicates
+            Set<Long> courseIds = activities.stream()
+                    .map(UserActivity::getCourseId)
+                    .collect(Collectors.toSet());
+
+            for (Long courseId : courseIds) {
+                Course course = courseRepository.findOne(courseId);
+                courses.add(course);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        if (courses.isEmpty()) {
+            Course mockCourse = new Course();
+            mockCourse.setName("Nici un curs");
+            mockCourse.setPercentage(0);
+
+            courses.add(mockCourse);
+        }
+
+        return courses;
+ */

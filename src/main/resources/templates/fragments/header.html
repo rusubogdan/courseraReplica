@@ -47,7 +47,9 @@
               Cursurile mele
               <span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><a th:each="course : ${userCourses}" th:href="@{/courses/__${course.id}__}" th:text="${course.name + ' - '  + course.percentage + '%'}"></a></li>
+                <li><a th:each="course : ${userCourses}" th:href="@{/courses/__${course.id}__}" th:text="${course.name}"></a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/courses/myCourses">Toate cursurile mele</a></li>
             </ul>
         </li>
       </ul>

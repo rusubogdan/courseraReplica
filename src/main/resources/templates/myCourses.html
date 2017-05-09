@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: dependencies">
+</head>
+<body>
+<nav th:replace="fragments/header :: navbar"></nav>
+<div class="container content">
+    <div th:if="${not #strings.listIsEmpty(userCourses)}" class="my-courses">
+        Cursurile mele
+    </div>
+    <div class="row col-md-12 my-courses-page">
+        <div th:each="course : ${userCourses}" class="col-md-6 panel panel-info">
+            <div>
+                <h2 th:text="${course.name}"></h2>
+            </div>
+            <div class="col-md-12 panel">
+                <div class="col-md-8 panel">
+                    Procentaj:
+                    <div class="progress active">
+                        <div class="progress-bar progress-bar-success"
+                             role="progressbar"  aria-valuemin="0" aria-valuemax="100"
+                             th:attr="aria-valuenow=${course.name}" th:style="'width:'+ ${course.percentage}+'%;'"></div>
+                    </div>
+                    <span th:text="${course.percentage + ' ' + '%'}"></span>
+                </div>
+                <div class="col-md-4 panel">
+                    <a th:if="${not (course.name == 'Nici un curs')}" class="btn btn-success pull-right"
+                       th:href="@{/courses/__${course.id}__}">Deschide</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
